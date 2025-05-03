@@ -735,6 +735,9 @@ require('lazy').setup({
         automatic_installation = false,
         handlers = {
           function(server_name)
+            if server_name == 'rust_analyzer' then
+              return
+            end
             local server = servers[server_name] or {}
             -- This handles overriding only values explicitly passed
             -- by the server configuration above. Useful when disabling
@@ -745,6 +748,11 @@ require('lazy').setup({
         },
       }
     end,
+  },
+  {
+    'mrcjkb/rustaceanvim',
+    version = '^6', -- Recommended
+    lazy = false,
   },
 
   { -- Autoformat
@@ -969,6 +977,7 @@ require('lazy').setup({
         'html',
         'gitignore',
         'dockerfile',
+        'rust',
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
