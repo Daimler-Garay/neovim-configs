@@ -1,7 +1,3 @@
--- You can add your own plugins here or in other files in this directory!
---  I promise not to create any merge conflicts in this directory :)
---
--- See the kickstart.nvim README for more information
 return {
   'nvimdev/dashboard-nvim',
   event = 'VimEnter',
@@ -23,6 +19,9 @@ return {
             key = 'f',
           },
         },
+        project = { enable = false },
+        mru = { enable = false },
+        footer = { '🚀 To The End Like I First Started.  🚀' },
       },
     }
   end,
