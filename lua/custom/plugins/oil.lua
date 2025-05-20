@@ -2,6 +2,9 @@ return {
   'stevearc/oil.nvim',
   ---@module 'oil',
   ---@type oil.SetupOpts
+  win_options = {
+    signcolumn = 'yes:2',
+  },
   keys = {
     { '\\', '<cmd>Oil --float<CR>', desc = 'Oil reveal', silent = true },
   },

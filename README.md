@@ -19,3 +19,11 @@ Follow the instructions from the original [kickstart.nvim README](https://github
 ## Customizations
 
 I've made a few adjustments such as creating independent files for each plugins; making it more modular and easy to manage. I've also added a few more plugins that I use (or at least I think I will) and will continue to tweak and make changes as I see fit. Feel free to use this as a starting point for your own setup!  
+
+## Todo
+
+Customize and upload tmux.conf
+
+- I like using it in combination with lazygit
+- It helps with debugging/testing
+- I can pick up where I left off in a new device
