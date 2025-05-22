@@ -20,6 +20,7 @@ return {
         'gitignore',
         'dockerfile',
         'rust',
+        'typescript',
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
