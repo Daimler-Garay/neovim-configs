@@ -57,14 +57,10 @@ return {
         --
         defaults = {
           file_ignore_patterns = {},
-          vimgrep_arguments = {
-            '--hidden',
-          },
+          vimgrep_arguments = {},
         },
         pickers = {
-          find_files = {
-            hidden = true,
-          },
+          find_files = {},
         },
         extensions = {
           ['ui-select'] = {
