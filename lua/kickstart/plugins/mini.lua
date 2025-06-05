@@ -21,6 +21,10 @@ return {
           enable = false,
         },
       }
+      require('mini.misc').setup {}
+      vim.schedule(function()
+        MiniMisc.setup_termbg_sync()
+      end)
     end,
   },
 }
