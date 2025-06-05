@@ -1,27 +1,22 @@
 return {
-  { -- Collection of various small independent plugins/modules
+  {
     'echasnovski/mini.nvim',
     config = function()
-      -- Better Around/Inside textobjects
-      --
-      -- Examples:
-      --  - va)  - [V]isually select [A]round [)]paren
-      --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
-      --  - ci'  - [C]hange [I]nside [']quote
+      -- Setup mini.ai
       require('mini.ai').setup { n_lines = 500 }
-
-      -- Add/delete/replace surroundings (brackets, quotes, etc.)
-      --
-      -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
-      -- - sd'   - [S]urround [D]elete [']quotes
-      -- - sr)'  - [S]urround [R]eplace [)] [']
+      -- Setup mini.surround
       require('mini.surround').setup()
+      -- Setup mini.animate
       require('mini.animate').setup {
         cursor = {
           enable = false,
         },
       }
+      -- Setup mini.misc
       require('mini.misc').setup {}
+
+      -- Automatically sync terminal background
+      -- This runs the function as soon as Neovim loads the plugin/config
       vim.schedule(function()
         MiniMisc.setup_termbg_sync()
       end)
