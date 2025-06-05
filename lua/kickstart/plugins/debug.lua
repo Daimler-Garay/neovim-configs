@@ -22,7 +22,7 @@ return {
     'jay-babu/mason-nvim-dap.nvim',
 
     -- Add your own debuggers here
-    'leoluz/nvim-dap-go',
+    'mfussenegger/nvim-dap-python',
   },
   keys = {
     -- Basic debugging keymaps, feel free to change to your liking!
@@ -95,8 +95,7 @@ return {
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
         'delve',
-        'python',
-        'rust',
+        'lldb',
       },
     }
 
@@ -140,13 +139,8 @@ return {
     dap.listeners.before.launch['dapui_config'] = dapui.open
     dap.listeners.before.attach['dapui_config'] = dapui.open
 
-    -- Install golang specific config
-    require('dap-go').setup {
-      delve = {
-        -- On Windows delve must be run attached or it crashes.
-        -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
-        detached = vim.fn.has 'win32' == 0,
-      },
-    }
+    -- Debugger for python courtesy of https://github.com/chrisgrieser/nvim-kickstart-python/
+    local debugPythonPath = require('mason-registry').get_package('debugpy'):get_install_path() .. '/venv/scripts/python'
+    require('dap-python').setup(debugPythonPath, {}) ---@diagnostic disable-line: missing-fields
   end,
 }
