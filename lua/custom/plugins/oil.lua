@@ -1,7 +1,5 @@
 return {
   'stevearc/oil.nvim',
-  ---@module 'oil',
-  ---@type oil.SetupOpts
   win_options = {
     signcolumn = 'yes:2',
   },
@@ -12,6 +10,11 @@ return {
     default_file_explorer = true,
     view_options = {
       show_hidden = true,
+    },
+    keymaps = {
+      ['q'] = function()
+        vim.api.nvim_win_close(0, true)
+      end,
     },
   },
   dependencies = { { 'echasnovski/mini.icons', opts = {} } },
