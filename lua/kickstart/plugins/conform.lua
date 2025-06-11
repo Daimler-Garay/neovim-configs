@@ -31,7 +31,7 @@ return {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        typescript = { 'prettier' },
+        typescript = { 'prettier', 'prettierd', stop_after_first = true },
         typescriptreact = { 'prettier' },
         css = { 'prettier' },
         -- Conform can also run multiple formatters sequentially
