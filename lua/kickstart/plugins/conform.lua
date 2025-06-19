@@ -33,7 +33,11 @@ return {
         lua = { 'stylua' },
         typescript = { 'prettier', 'prettierd', stop_after_first = true },
         typescriptreact = { 'prettier' },
+        html = { 'prettier' },
         css = { 'prettier' },
+        markdown = { 'prettier' },
+        yaml = { 'prettier' },
+        json = { 'prettier' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
