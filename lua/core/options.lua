@@ -67,12 +67,24 @@ vim.opt.scrolloff = 10
 vim.opt.confirm = true
 
 --- Autosave file when leaving insert mode
-vim.o.autowriteall = true
+local autosave_filetypes = {
+  typescript = true,
+  javascript = true,
+  typescriptreact = true,
+  javascriptreact = true,
+  html = true,
+  css = true,
+  scss = true,
+  json = true,
+  vue = true,
+}
 
-vim.api.nvim_create_autocmd({ 'InsertLeavePre', 'TextChanged', 'TextChangedP' }, {
-  pattern = '*',
+vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged', 'TextChangedI' }, {
   callback = function()
-    vim.cmd 'silent! write'
+    local ft = vim.bo.filetype
+    if autosave_filetypes[ft] and vim.bo.modifiable and not vim.bo.readonly then
+      vim.cmd 'silent! write'
+    end
   end,
 })
 -- vim: ts=2 sts=2 sw=2 et
