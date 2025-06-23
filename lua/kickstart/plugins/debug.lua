@@ -7,6 +7,7 @@ return {
     'rcarriga/nvim-dap-ui',
 
     -- Required dependency for nvim-dap-ui
+    'theHamsta/nvim-dap-virtual-text',
     'nvim-neotest/nvim-nio',
 
     -- Installs the debug adapters for you
@@ -137,10 +138,6 @@ return {
         -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
         detached = vim.fn.has 'win32' == 0,
       },
-    }
-
-    require('dap-python').setup {
-      'python3',
     }
   end,
 }
