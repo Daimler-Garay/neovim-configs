@@ -23,6 +23,7 @@ return {
   'mrcjkb/rustaceanvim',
   version = '^6', -- Recommended
   lazy = false, -- This plugin is already lazy
+  ft = 'rust',
   server = {
     on_attach = function(_, bufnr)
       vim.keymap.set('n', '<leader>cq', function()
