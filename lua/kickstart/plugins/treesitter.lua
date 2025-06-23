@@ -6,6 +6,7 @@ return {
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
       ensure_installed = {
+        'bash',
         'python',
         'lua',
         'regex',
@@ -21,6 +22,18 @@ return {
         'dockerfile',
         'rust',
         'typescript',
+        'ron',
+        'yaml',
+        'jsonc',
+        'luadoc',
+        'luap',
+        'toml',
+        'vim',
+        'vimdoc',
+        'diff',
+        'regex',
+        'tsx',
+        'javascript',
       },
       -- Autoinstall languages that are not installed
       auto_install = true,
