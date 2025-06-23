@@ -52,9 +52,4 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
--- Buffer Management
-vim.keymap.set('n', '<Tab>', ':bnext<CR>', { noremap = true })
-vim.keymap.set('n', '<S-Tab>', 'BufferLineCyclePrev<CR>')
-
-
 -- vim: ts=2 sts=2 sw=2 et
