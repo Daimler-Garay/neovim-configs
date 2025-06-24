@@ -3,7 +3,7 @@ return {
     'echasnovski/mini.nvim',
     config = function()
       -- Setup mini.ai
-      require('mini.ai').setup { n_lines = 500 }
+      require('mini.ai').setup { n_lines = 50 }
       -- Setup mini.surround
       require('mini.surround').setup()
       -- Setup mini.animate

@@ -4,6 +4,7 @@ return {
   opts = {
     adapters = {
       ['rustaceanvim.neotest'] = {},
+      ['neotest-python'] = {},
     },
   },
 }
