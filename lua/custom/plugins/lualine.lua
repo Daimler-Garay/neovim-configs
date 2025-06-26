@@ -67,20 +67,21 @@ return {
 
     require('lualine').setup {
       options = {
-        theme = bubbles_theme,
-        component_separators = '',
+        theme = 'kanagawa',
+        component_separators = { left = '|', right = '|' },
         section_separators = { left = '', right = '' },
       },
       sections = {
-        lualine_a = { { 'mode', separator = { left = '' }, right_padding = 2 } },
+        lualine_a = { { 'mode' } },
         lualine_b = { 'filename', 'branch' },
         lualine_c = {
-          '%=', --[[ add your center components here in place of this comment ]]
+          '%=',
+          { 'datetime', style = ' %H:%M |' },
         },
         lualine_x = {},
-        lualine_y = { 'filetype', 'progress' },
+        lualine_y = { 'filetype', 'fileformat', 'location' },
         lualine_z = {
-          { 'location', separator = { right = '' }, left_padding = 2 },
+          { 'progress' },
         },
       },
       inactive_sections = {
