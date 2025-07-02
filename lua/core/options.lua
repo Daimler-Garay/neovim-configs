@@ -87,4 +87,6 @@ vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged', 'TextChangedI' }, {
     end
   end,
 })
+
+vim.o.conceallevel = 1
 -- vim: ts=2 sts=2 sw=2 et
