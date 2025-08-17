@@ -21,7 +21,7 @@ return {
     workspaces = {
       {
         name = 'personal',
-        path = 'C:/Users/daimler.garay/Documents/personal',
+        path = '~/vaults/personal',
       },
     },
 
