@@ -7,7 +7,6 @@ return {
       local lint = require 'lint'
       lint.linters_by_ft = {
         markdown = { 'markdownlint' },
-        python = { 'pylint' },
         typescriptreact = { 'eslint_d' },
         typescript = { 'eslint_d' },
         json = { 'jsonlint' },
