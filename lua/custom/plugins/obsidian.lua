@@ -13,7 +13,7 @@ return {
     workspaces = {
       {
         name = 'personal',
-        path = '~/vaults/personal',
+        path = '~/vaults/notes',
         opts = function()
           local vault = vim.fn.expand '~/vaults/notes'
           return {
