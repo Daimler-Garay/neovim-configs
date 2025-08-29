@@ -7,11 +7,6 @@ return {
       -- Setup mini.surround
       require('mini.surround').setup()
       -- Setup mini.animate
-      require('mini.animate').setup {
-        cursor = {
-          enable = false,
-        },
-      }
       -- Setup mini.misc
       require('mini.misc').setup {}
 
