@@ -3,7 +3,7 @@ vim.g.maplocalleader = " "
 
 vim.g.have_nerd_font = true
 
-vim.lsp.enable({ "lua_ls", "pylsp", "ruff", "ts_ls" })
+vim.lsp.enable({ "lua_ls", "pylsp", "ruff", "rust_analyzer" })
 
 require("core.options")
 
