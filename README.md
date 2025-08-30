@@ -22,8 +22,4 @@ I've made a few adjustments such as creating independent files for each plugins;
 
 ## Todo
 
-Customize and upload tmux.conf
-
-- I like using it in combination with lazygit
-- It helps with debugging/testing
-- I can pick up where I left off in a new device
+- [ ] Migrate to vim.pack for handling plugins, once 0.12 is stable
