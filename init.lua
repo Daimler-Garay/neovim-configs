@@ -1,24 +1,55 @@
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
+vim.pack.add({
+    { src = "https://github.com/stevearc/oil.nvim" },
+    { src = "https://github.com/echasnovski/mini.pick" },
+    { src = "https://github.com/nvim-treesitter/nvim-treesitter",    version = "main" },
+    { src = "https://github.com/chomosuke/typst-preview.nvim" },
+    { src = "https://github.com/neovim/nvim-lspconfig" },
+    { src = "https://github.com/mason-org/mason.nvim" },
+    { src = "https://github.com/L3MON4D3/LuaSnip" },
+    { src = "https://github.com/stevearc/conform.nvim" },
+    { src = "https://github.com/folke/flash.nvim" },
+    { src = "https://github.com/kdheepak/lazygit.nvim" },
+    { src = "https://github.com/kepano/flexoki-neovim" },
+    { src = "https://github.com/alexghergh/nvim-tmux-navigation" },
+    { src = "https://github.com/saghen/blink.cmp" }
+})
 
-vim.g.have_nerd_font = true
+require("mason").setup()
+require("mini.pick").setup({})
+require("oil").setup({ view_options = { show_hidden = true } })
+require("blink.cmp").setup({
+    version = "1.*",
+    signature = { enabled = true },
+    completion = { auto_show = true, auto_show_delay_ms = 500 },
+    menu = {
+        auto_show = true,
+        draw = {
+            treesitter = { "lsp" },
+            columns = { { "kind_icon", "label", "label_description", gap = 1 }, { "kind" } }
+        }
+    },
+    fuzzy = { implementation = "lua" },
+})
+
+
+require("core.options")
+require("core.keymaps")
+
 
 vim.lsp.enable({ "lua_ls", "tinymist", "ruff", "rust_analyzer" })
 
-require("core.options")
+-- theme
+vim.cmd.colorscheme("flexoki-dark")
+vim.cmd(":hi statusline guibg=NONE")
 
-require("core.keymaps")
+-- snippets
+local sysname = vim.loop.os_uname().sysname
+local snippet_path
 
-require("core.lazy-bootstrap")
-
-require("core.lazy-plugins")
-
-local function set_statusline_transparent()
-	for _, grp in ipairs({ "StatusLine", "StatusLineNC" }) do
-		pcall(vim.api.nvim_set_hl, 0, grp, { bg = "none" })
-	end
+if sysname == "Windows_NT" then
+    snippet_path = vim.fn.expand("~/AppData/Local/nvim/snippets/")
+else
+    snippet_path = vim.fn.expand("~/.config/nvim/snippets/")
 end
-
-vim.api.nvim_create_autocmd({ "VimEnter", "ColorScheme" }, {
-	callback = set_statusline_transparent,
-})
+require("luasnip").setup({ enable_autosnippets = true })
+require("luasnip.loaders.from_lua").load({ paths = snippet_path })
