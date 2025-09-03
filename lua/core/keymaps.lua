@@ -1,3 +1,6 @@
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
 local map = vim.keymap.set
 map("n", "<Esc>", "<cmd>nohlsearch<CR>")
 map("n", "<leader>q", vim.diagnostic.setloclist)
@@ -6,7 +9,7 @@ map("n", "<C-h>", "<C-w><C-h>")
 map("n", "<C-l>", "<C-w><C-l>")
 map("n", "<C-j>", "<C-w><C-j>")
 map("n", "<C-k>", "<C-w><C-k>")
-map("n", "<leader>lf", vim.lsp.buf.format)
+map("n", "<leader>ff", vim.lsp.buf.format)
 
 -- Snippets
 local ls = require("luasnip")
@@ -62,4 +65,3 @@ vim.api.nvim_create_autocmd("TextYankPost", {
         vim.highlight.on_yank()
     end,
 })
-

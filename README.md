@@ -22,4 +22,4 @@ I've made a few adjustments such as creating independent files for each plugins;
 
 ## Todo
 
-- [ ] Migrate to vim.pack for handling plugins, once 0.12 is stable
+- [x] Migrate to vim.pack for handling plugins, once 0.12 is stable

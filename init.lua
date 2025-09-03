@@ -1,7 +1,7 @@
 vim.pack.add({
     { src = "https://github.com/stevearc/oil.nvim" },
     { src = "https://github.com/echasnovski/mini.pick" },
-    { src = "https://github.com/nvim-treesitter/nvim-treesitter",    version = "main" },
+    { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
     { src = "https://github.com/chomosuke/typst-preview.nvim" },
     { src = "https://github.com/neovim/nvim-lspconfig" },
     { src = "https://github.com/mason-org/mason.nvim" },
@@ -34,9 +34,15 @@ require("blink.cmp").setup({
 
 require("core.options")
 require("core.keymaps")
+require("nvim-treesitter.config").setup({
+    highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+    }
+})
 
 
-vim.lsp.enable({ "lua_ls", "tinymist", "ruff", "rust_analyzer" })
+vim.lsp.enable({ "lua_ls", "rust_analyzer", "pylsp" })
 
 -- theme
 vim.cmd.colorscheme("flexoki-dark")

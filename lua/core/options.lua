@@ -29,6 +29,4 @@ vim.opt.clipboard = "unnamedplus" -- Use system clipboard
 vim.opt.completeopt = { "menuone", "noselect" } -- Better completion
 vim.opt.pumheight = 10 -- Popup menu height
 vim.o.winborder = "rounded"
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
 vim.g.have_nerd_font = true
