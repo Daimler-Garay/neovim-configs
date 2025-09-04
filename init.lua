@@ -13,11 +13,9 @@ vim.pack.add({
     { src = "https://github.com/alexghergh/nvim-tmux-navigation" },
 })
 
+
 require("mason").setup()
-require("mini.pick").setup({})
 require("oil").setup({ view_options = { show_hidden = true } })
-
-
 require("core.options")
 require("core.keymaps")
 require("nvim-treesitter.config").setup({
@@ -27,8 +25,35 @@ require("nvim-treesitter.config").setup({
     }
 })
 
+local win_config = function()
+    local height = math.floor(0.618 * vim.o.lines)
+    local width = math.floor(0.618 * vim.o.columns)
+    return {
+        anchor = 'NW',
+        height = height,
+        width = width,
+        row = math.floor(0.5 * (vim.o.lines - height)),
+        col = math.floor(0.5 * (vim.o.columns - width)),
+    }
+end
+require("mini.pick").setup({
+    window = { config = win_config },
+    source = {
+        files = function()
+            return require("mini.pick").default_source.files({
+                command = {
+                    "fd", "--type", "f", "--hidden",
+                    "--exclude", "venv",
+                    "--exclude", ".venv",
+                    "--exclude", "node_modules",
+                },
+            })
+        end,
+    },
+})
 
-vim.lsp.enable({ "lua_ls", "tinymist", "rust_analyzer", "pylsp" })
+-- lsp
+vim.lsp.enable({ "lua_ls", "tinymist", "rust_analyzer", "pylsp", "ts_ls" })
 
 -- theme
 vim.cmd.colorscheme("flexoki-dark")
