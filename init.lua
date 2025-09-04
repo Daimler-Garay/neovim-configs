@@ -11,25 +11,11 @@ vim.pack.add({
     { src = "https://github.com/kdheepak/lazygit.nvim" },
     { src = "https://github.com/kepano/flexoki-neovim" },
     { src = "https://github.com/alexghergh/nvim-tmux-navigation" },
-    { src = "https://github.com/saghen/blink.cmp" }
 })
 
 require("mason").setup()
 require("mini.pick").setup({})
 require("oil").setup({ view_options = { show_hidden = true } })
-require("blink.cmp").setup({
-    version = "1.*",
-    signature = { enabled = true },
-    completion = { auto_show = true, auto_show_delay_ms = 500 },
-    menu = {
-        auto_show = true,
-        draw = {
-            treesitter = { "lsp" },
-            columns = { { "kind_icon", "label", "label_description", gap = 1 }, { "kind" } }
-        }
-    },
-    fuzzy = { implementation = "lua" },
-})
 
 
 require("core.options")
@@ -42,7 +28,7 @@ require("nvim-treesitter.config").setup({
 })
 
 
-vim.lsp.enable({ "lua_ls", "rust_analyzer", "pylsp" })
+vim.lsp.enable({ "lua_ls", "tinymist", "rust_analyzer", "pylsp" })
 
 -- theme
 vim.cmd.colorscheme("flexoki-dark")
