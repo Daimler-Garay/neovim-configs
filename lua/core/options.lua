@@ -30,3 +30,5 @@ vim.opt.completeopt = { "menuone", "noselect" } -- Better completion
 vim.opt.pumheight = 10 -- Popup menu height
 vim.o.winborder = "rounded"
 vim.g.have_nerd_font = true
+
+
