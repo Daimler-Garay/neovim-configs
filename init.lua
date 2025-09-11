@@ -11,20 +11,54 @@ vim.pack.add({
     { src = "https://github.com/kdheepak/lazygit.nvim" },
     { src = "https://github.com/kepano/flexoki-neovim" },
     { src = "https://github.com/alexghergh/nvim-tmux-navigation" },
+    { src = "https://github.com/saecki/crates.nvim" },
+    { src = "https://github.com/nvim-neotest/neotest" },
+    { src = "https://github.com/nvim-neotest/nvim-nio" },
+    { src = "https://github.com/nvim-lua/plenary.nvim" },
+    { src = "https://github.com/antoinemadec/FixCursorHold.nvim" },
+    { src = "https://github.com/fredrikaverpil/neotest-golang" },
 })
+
 
 
 require("mason").setup()
 require("oil").setup({ view_options = { show_hidden = true } })
 require("core.options")
 require("core.keymaps")
+require("conform").setup {
+    formatters_by_ft = {
+        lua = {"stylua" },
+        python = {"ruff"},
+        rust = {"rustfmt", lsp_format = "fallback"},
+    },
+    format_on_save = {
+        timeout_ms = 500,
+        lsp_format = "fallback",
+    },
+}
 require("nvim-treesitter.config").setup({
     highlight = {
         enable = true,
         additional_vim_regex_highlighting = false,
     }
 })
-
+require("neotest").setup({
+    adapters = {
+        require("neotest-golang"){
+            version = vim.version.range('*')
+        },
+    }
+})
+require("crates").setup {
+    lsp = {
+        enabled = true,
+        on_attach = function(client, bufnr)
+        end,
+        actions = true,
+        comletion = true,
+        hover = true,
+    },
+}
 local win_config = function()
     local height = math.floor(0.618 * vim.o.lines)
     local width = math.floor(0.618 * vim.o.columns)
@@ -53,7 +87,7 @@ require("mini.pick").setup({
 })
 
 -- lsp
-vim.lsp.enable({ "lua_ls", "tinymist", "rust_analyzer", "pylsp", "ts_ls" })
+vim.lsp.enable({ "lua_ls", "tinymist", "rust_analyzer", "pylsp", "ts_ls", "gopls" })
 
 -- theme
 vim.cmd.colorscheme("flexoki-dark")
