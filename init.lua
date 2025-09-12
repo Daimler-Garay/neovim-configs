@@ -17,13 +17,18 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
 	{ src = "https://github.com/antoinemadec/FixCursorHold.nvim" },
 	{ src = "https://github.com/fredrikaverpil/neotest-golang" },
+	{ src = "https://github.com/leoluz/nvim-dap-go" },
 	{ src = "https://github.com/mrcjkb/rustaceanvim" },
+	{ src = "https://github.com/mfussenegger/nvim-dap" },
+	{ src = "https://github.com/rcarriga/nvim-dap-ui" },
+	{ src = "https://github.com/nvim-neotest/nvim-nio" },
 })
 
 require("mason").setup()
 require("oil").setup({ view_options = { show_hidden = true } })
 require("core.options")
 require("core.keymaps")
+require("dap-go").setup()
 require("conform").setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
@@ -55,7 +60,7 @@ require("crates").setup({
 		enabled = true,
 		on_attach = function(client, bufnr) end,
 		actions = true,
-		comletion = true,
+		completion = true,
 		hover = true,
 	},
 })
