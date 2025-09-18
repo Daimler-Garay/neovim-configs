@@ -28,11 +28,6 @@ end, { silent = true })
 -- Oil
 map("n", "\\", "<cmd>Oil --float<cr>")
 
--- Flash
-map({ "n", "x", "o" }, "<leader>f", function()
-	require("flash").jump()
-end)
-
 -- Lazygit
 map("n", "<leader>lg", "<cmd>LazyGit<cr>")
 

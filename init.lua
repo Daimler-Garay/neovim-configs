@@ -7,9 +7,8 @@ vim.pack.add({
 	{ src = "https://github.com/mason-org/mason.nvim" },
 	{ src = "https://github.com/L3MON4D3/LuaSnip" },
 	{ src = "https://github.com/stevearc/conform.nvim" },
-	{ src = "https://github.com/folke/flash.nvim" },
 	{ src = "https://github.com/kdheepak/lazygit.nvim" },
-	{ src = "https://github.com/kepano/flexoki-neovim" },
+	{ src = "https://github.com/projekt0n/github-nvim-theme" },
 	{ src = "https://github.com/alexghergh/nvim-tmux-navigation" },
 	{ src = "https://github.com/saecki/crates.nvim" },
 	{ src = "https://github.com/nvim-neotest/neotest" },
@@ -101,7 +100,7 @@ require("mini.pick").setup({
 vim.lsp.enable({ "lua_ls", "tinymist", "pylsp", "ts_ls", "gopls" })
 
 -- theme
-vim.cmd.colorscheme("flexoki-dark")
+vim.cmd.colorscheme("github_dark_high_contrast")
 vim.cmd(":hi statusline guibg=NONE")
 
 -- snippets
