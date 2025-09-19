@@ -16,6 +16,7 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
 	{ src = "https://github.com/antoinemadec/FixCursorHold.nvim" },
 	{ src = "https://github.com/fredrikaverpil/neotest-golang" },
+	{ src = "https://github.com/nvim-neotest/neotest-python" },
 	{ src = "https://github.com/leoluz/nvim-dap-go" },
 	{ src = "https://github.com/mrcjkb/rustaceanvim" },
 	{ src = "https://github.com/mfussenegger/nvim-dap" },
@@ -52,6 +53,7 @@ require("neotest").setup({
 			version = vim.version.range("*"),
 		}),
 		require("rustaceanvim.neotest"),
+		require("neotest-python"),
 	},
 })
 require("crates").setup({
