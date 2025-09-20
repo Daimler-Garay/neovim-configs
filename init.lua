@@ -3,24 +3,21 @@ vim.pack.add({
 	{ src = "https://github.com/echasnovski/mini.pick" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
 	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
-	{ src = "https://github.com/neovim/nvim-lspconfig" },
 	{ src = "https://github.com/mason-org/mason.nvim" },
 	{ src = "https://github.com/L3MON4D3/LuaSnip" },
 	{ src = "https://github.com/stevearc/conform.nvim" },
 	{ src = "https://github.com/kdheepak/lazygit.nvim" },
 	{ src = "https://github.com/projekt0n/github-nvim-theme" },
 	{ src = "https://github.com/alexghergh/nvim-tmux-navigation" },
-	{ src = "https://github.com/saecki/crates.nvim" },
 	{ src = "https://github.com/nvim-neotest/neotest" },
 	{ src = "https://github.com/nvim-neotest/nvim-nio" },
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
 	{ src = "https://github.com/antoinemadec/FixCursorHold.nvim" },
 	{ src = "https://github.com/fredrikaverpil/neotest-golang" },
 	{ src = "https://github.com/leoluz/nvim-dap-go" },
-	{ src = "https://github.com/mrcjkb/rustaceanvim" },
 	{ src = "https://github.com/mfussenegger/nvim-dap" },
 	{ src = "https://github.com/rcarriga/nvim-dap-ui" },
-	{ src = "https://github.com/nvim-neotest/nvim-nio" },
+	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("*") },
 })
 
 require("mason").setup()
@@ -32,7 +29,6 @@ require("conform").setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
 		python = { "ruff" },
-		rust = { "rustfmt", lsp_format = "fallback" },
 		go = { "goimports" },
 	},
 	format_on_save = {
@@ -51,16 +47,6 @@ require("neotest").setup({
 		require("neotest-golang")({
 			version = vim.version.range("*"),
 		}),
-		require("rustaceanvim.neotest"),
-	},
-})
-require("crates").setup({
-	lsp = {
-		enabled = true,
-		on_attach = function(client, bufnr) end,
-		actions = true,
-		completion = true,
-		hover = true,
 	},
 })
 local win_config = function()
@@ -93,6 +79,35 @@ require("mini.pick").setup({
 				},
 			})
 		end,
+	},
+})
+require("blink.cmp").setup({
+	snippets = { preset = "luasnip" },
+	signature = { enabled = true },
+	appearance = {
+		use_nvim_cmp_as_default = false,
+		nerd_font_variant = "normal",
+	},
+	completion = {
+		menu = {
+			scrolloff = 1,
+			scrollbar = false,
+			draw = {
+				columns = {
+					{ "kind_icon" },
+					{ "label", "label_description", gap = 1 },
+					{ "kind" },
+					{ "source_name" },
+				},
+			},
+		},
+		documentation = {
+			window = {
+				scrollbar = false,
+			},
+			auto_show = false,
+			auto_show_delay_ms = 500,
+		},
 	},
 })
 
