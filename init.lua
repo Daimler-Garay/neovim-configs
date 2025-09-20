@@ -14,6 +14,7 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
 	{ src = "https://github.com/antoinemadec/FixCursorHold.nvim" },
 	{ src = "https://github.com/fredrikaverpil/neotest-golang" },
+	{ src = "https://github.com/nvim-neotest/neotest-python" },
 	{ src = "https://github.com/leoluz/nvim-dap-go" },
 	{ src = "https://github.com/mfussenegger/nvim-dap" },
 	{ src = "https://github.com/rcarriga/nvim-dap-ui" },
@@ -47,6 +48,7 @@ require("neotest").setup({
 		require("neotest-golang")({
 			version = vim.version.range("*"),
 		}),
+		require("neotest-python"),
 	},
 })
 local win_config = function()
