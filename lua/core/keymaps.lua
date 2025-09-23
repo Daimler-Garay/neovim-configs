@@ -56,7 +56,15 @@ map("n", "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight)
 local dap = require("dap")
 local dapui = require("dapui")
 
-dapui.setup()
+dapui.setup({
+	expand_lines = true,
+	controls = { enabled = false },
+	floating = { border = "rounded" },
+	render = {
+		max_type_length = 60,
+		max_value_lines = 200,
+	},
+})
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
 	dapui.open()
@@ -72,30 +80,17 @@ vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DiagnosticError", 
 vim.fn.sign_define("DapBreakpointCondition", { text = "◆", texthl = "DiagnosticWarn", linehl = "", numhl = "" })
 vim.fn.sign_define("DapStopped", { text = "▸", texthl = "DiagnosticInfo", linehl = "Visual", numhl = "" })
 
-map("n", "<F5>", function()
-	dap.continue()
-end, { desc = "DAP Continue/Start" })
-map("n", "<F9>", function()
-	dap.toggle_breakpoint()
-end, { desc = "DAP Toggle Breakpoint" })
-map("n", "<leader>B", function()
-	dap.set_breakpoint(vim.fn.input("Condition: "))
-end, { desc = "DAP Conditional BP" })
-map("n", "<F10>", function()
-	dap.step_over()
-end, { desc = "DAP Step Over" })
-map("n", "<F11>", function()
-	dap.step_into()
-end, { desc = "DAP Step Into" })
-map("n", "<S-F11>", function()
-	dap.step_out()
-end, { desc = "DAP Step Out" })
 map("n", "<leader>du", function()
-	dapui.toggle({})
-end, { desc = "DAP UI Toggle" })
-map("n", "<leader>de", function()
+	dapui.toggle()
+end, { noremap = true, silent = true })
+
+map({ "n", "v" }, "<leader>dw", function()
+	dapui.eval(nil, { enter = true })
+end, { noremap = true, silent = true })
+
+map({ "n", "v" }, "Q", function()
 	dapui.eval()
-end, { desc = "DAP Eval (hover expr)" })
+end, { noremap = true, silent = true })
 
 -- Auto Commands
 vim.api.nvim_create_autocmd("TextYankPost", {
