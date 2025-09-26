@@ -6,6 +6,8 @@ vim.pack.add({
 	{ src = "https://github.com/mason-org/mason.nvim" },
 	{ src = "https://github.com/L3MON4D3/LuaSnip" },
 	{ src = "https://github.com/stevearc/conform.nvim" },
+	{ src = "http://github.com/mrcjkb/rustaceanvim" },
+	{ src = "https://github.com/saecki/crates.nvim" },
 	{ src = "https://github.com/kdheepak/lazygit.nvim" },
 	{ src = "https://github.com/projekt0n/github-nvim-theme" },
 	{ src = "https://github.com/alexghergh/nvim-tmux-navigation" },
@@ -26,11 +28,28 @@ require("oil").setup({ view_options = { show_hidden = true } })
 require("core.options")
 require("core.keymaps")
 require("dap-go").setup()
+require("crates").setup({
+	lsp = {
+		enabled = true,
+		actions = true,
+		completion = true,
+		hover = true,
+	},
+
+	completion = {
+		crates = {
+			enabled = true,
+			max_results = 8,
+			min_chars = 3,
+		},
+	},
+})
 require("conform").setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
 		python = { "ruff" },
 		go = { "goimports" },
+		rust = { "rustfmt", lsp_format = "fallback" },
 	},
 	format_on_save = {
 		timeout_ms = 500,
@@ -49,6 +68,7 @@ require("neotest").setup({
 			version = vim.version.range("*"),
 		}),
 		require("neotest-python"),
+		require("rustaceanvim.neotest"),
 	},
 })
 local win_config = function()
@@ -114,7 +134,7 @@ require("blink.cmp").setup({
 })
 
 -- lsp
-vim.lsp.enable({ "lua_ls", "tinymist", "pylsp", "ts_ls", "gopls" })
+vim.lsp.enable({ "lua_ls", "rust_analyzer", "tinymist", "pylsp", "ts_ls", "gopls" })
 
 -- theme
 vim.cmd.colorscheme("github_dark_high_contrast")
