@@ -60,10 +60,6 @@ dapui.setup({
 	expand_lines = true,
 	controls = { enabled = false },
 	floating = { border = "rounded" },
-	render = {
-		max_type_length = 60,
-		max_value_lines = 200,
-	},
 })
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
@@ -91,6 +87,34 @@ end, { noremap = true, silent = true })
 map({ "n", "v" }, "Q", function()
 	dapui.eval()
 end, { noremap = true, silent = true })
+
+map("n", "<leader>dB", function()
+	dap.set_breakpoiont(vim.fn.input("Breakpoint condition: "))
+end)
+
+map("n", "<leader>db", function()
+	dap.toggle_breakpoint()
+end)
+
+map("n", "<leader>dc", function()
+	dap.continue()
+end)
+
+map("n", "<leader>di", function()
+	dap.step_into()
+end)
+
+map("n", "<leader>do", function()
+	dap.step_out()
+end)
+
+map("n", "<leadeer>dO", function()
+	dap.step_over()
+end)
+
+map("n", "<leader>dr", function()
+	dap.repl.toggle()
+end)
 
 -- Auto Commands
 vim.api.nvim_create_autocmd("TextYankPost", {
