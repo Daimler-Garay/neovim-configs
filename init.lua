@@ -86,6 +86,7 @@ require("mini.pick").setup({
 					".venv",
 					"--exclude",
 					"node_modules",
+					"static",
 				},
 			})
 		end,
