@@ -29,3 +29,4 @@ vim.opt.clipboard = "unnamedplus" -- Use system clipboard
 vim.opt.pumheight = 10 -- Popup menu height
 vim.o.winborder = "rounded"
 vim.g.have_nerd_font = true
+vim.opt.laststatus = 3

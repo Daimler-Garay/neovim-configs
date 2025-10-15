@@ -15,19 +15,22 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-neotest/nvim-nio" },
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
 	{ src = "https://github.com/antoinemadec/FixCursorHold.nvim" },
-	{ src = "https://github.com/fredrikaverpil/neotest-golang" },
 	{ src = "https://github.com/nvim-neotest/neotest-python" },
-	{ src = "https://github.com/leoluz/nvim-dap-go" },
 	{ src = "https://github.com/mfussenegger/nvim-dap" },
 	{ src = "https://github.com/rcarriga/nvim-dap-ui" },
 	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("*") },
+	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
 })
 
 require("mason").setup()
-require("oil").setup({ view_options = { show_hidden = true } })
+require("oil").setup({
+	view_options = { show_hidden = true },
+	lsp_file_methods = { enbaled = true, timeout_ms = 1000, autosave_changes = true },
+	columns = { "permissions", "icon" },
+	float = { max_width = 0.7, max_height = 0.6, border = "rounded" },
+})
 require("core.options")
 require("core.keymaps")
-require("dap-go").setup()
 require("crates").setup({
 	lsp = {
 		enabled = true,
@@ -48,8 +51,6 @@ require("conform").setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
 		python = { "ruff" },
-		go = { "goimports" },
-		rust = { "rustfmt", lsp_format = "fallback" },
 	},
 	format_on_save = {
 		timeout_ms = 500,
@@ -64,9 +65,6 @@ require("nvim-treesitter.config").setup({
 })
 require("neotest").setup({
 	adapters = {
-		require("neotest-golang")({
-			version = vim.version.range("*"),
-		}),
 		require("neotest-python"),
 		require("rustaceanvim.neotest"),
 	},
@@ -74,7 +72,7 @@ require("neotest").setup({
 require("mini.pick").setup({
 	source = {
 		files = function()
-			return require("mini.pick").default_source.files({
+			return require("mini.pick").builtin.files({
 				command = {
 					"fd",
 					"--type",
@@ -123,7 +121,7 @@ require("blink.cmp").setup({
 })
 
 -- lsp
-vim.lsp.enable({ "lua_ls", "rust_analyzer", "tinymist", "pylsp", "ts_ls", "gopls" })
+vim.lsp.enable({ "lua_ls", "rust_analyzer", "tinymist", "pylsp", "ts_ls" })
 
 -- theme
 vim.cmd.colorscheme("github_dark_high_contrast")
