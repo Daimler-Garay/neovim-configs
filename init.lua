@@ -22,6 +22,8 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
 })
 
+require("core.options")
+require("core.keymaps")
 require("mason").setup()
 require("oil").setup({
 	view_options = { show_hidden = true },
@@ -29,8 +31,6 @@ require("oil").setup({
 	columns = { "permissions", "icon" },
 	float = { max_width = 0.7, max_height = 0.6, border = "rounded" },
 })
-require("core.options")
-require("core.keymaps")
 require("crates").setup({
 	lsp = {
 		enabled = true,
@@ -51,6 +51,7 @@ require("conform").setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
 		python = { "ruff" },
+		typescript = { "prettier" },
 	},
 	format_on_save = {
 		timeout_ms = 500,
@@ -69,27 +70,7 @@ require("neotest").setup({
 		require("rustaceanvim.neotest"),
 	},
 })
-require("mini.pick").setup({
-	source = {
-		files = function()
-			return require("mini.pick").builtin.files({
-				command = {
-					"fd",
-					"--type",
-					"f",
-					"--hidden",
-					"--exclude",
-					"venv",
-					"--exclude",
-					".venv",
-					"--exclude",
-					"node_modules",
-					"static",
-				},
-			})
-		end,
-	},
-})
+require("mini.pick").setup({})
 require("blink.cmp").setup({
 	snippets = { preset = "luasnip" },
 	signature = { enabled = true },
@@ -116,6 +97,10 @@ require("blink.cmp").setup({
 			},
 			auto_show = false,
 			auto_show_delay_ms = 500,
+		},
+		list = {
+			max_items = 70,
+			selection = { preselect = false, auto_insert = true },
 		},
 	},
 })
