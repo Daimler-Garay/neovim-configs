@@ -14,6 +14,8 @@ map("n", "<C-d>", "<C-d>zz")
 map("n", "<C-u>", "<C-u>zz")
 map("n", "<C-f>", "<C-f>zz")
 map("n", "<C-b>", "<C-b>zz")
+map("v", "J", ":m '>+1<CR>gv=gv") -- move blocks of code easily (Up)
+map("v", "K", ":m '<-2<CR>gv=gv") -- move blocks of code easily (Down)
 
 -- Neotest
 map("n", "<leader>tr", function()
@@ -48,6 +50,10 @@ end)
 
 map("n", "<leader>sb", function()
 	require("mini.pick").builtin.buffers()
+end)
+
+map("n", "<leader>sd", function()
+	require("mini.extra").pickers.diagnostic({ scope = "current" })
 end)
 
 -- Tmux Navigation

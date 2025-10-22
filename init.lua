@@ -1,6 +1,6 @@
 vim.pack.add({
 	{ src = "https://github.com/stevearc/oil.nvim" },
-	{ src = "https://github.com/echasnovski/mini.pick" },
+	{ src = "https://github.com/nvim-mini/mini.pick" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
 	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
 	{ src = "https://github.com/mason-org/mason.nvim" },
@@ -20,6 +20,7 @@ vim.pack.add({
 	{ src = "https://github.com/rcarriga/nvim-dap-ui" },
 	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("*") },
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
+	{ src = "https://github.com/nvim-mini/mini.extra", version = vim.version.range("*") },
 })
 
 require("core.options")
@@ -52,6 +53,8 @@ require("conform").setup({
 		lua = { "stylua" },
 		python = { "ruff" },
 		typescript = { "prettier" },
+		json = { "prettier" },
+		yaml = { "prettier" },
 	},
 	format_on_save = {
 		timeout_ms = 500,
@@ -70,6 +73,7 @@ require("neotest").setup({
 		require("rustaceanvim.neotest"),
 	},
 })
+require("mini.extra").setup({})
 require("mini.pick").setup({})
 require("blink.cmp").setup({
 	snippets = { preset = "luasnip" },
@@ -106,7 +110,7 @@ require("blink.cmp").setup({
 })
 
 -- lsp
-vim.lsp.enable({ "lua_ls", "rust_analyzer", "tinymist", "pylsp", "ts_ls" })
+vim.lsp.enable({ "lua_ls", "rust_analyzer", "tinymist", "pylsp", "ts_ls", "yamlls", "jsonls" })
 
 -- theme
 vim.cmd.colorscheme("github_dark_high_contrast")
