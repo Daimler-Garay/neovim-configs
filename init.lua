@@ -55,6 +55,7 @@ require("conform").setup({
 		typescript = { "prettier" },
 		json = { "prettier" },
 		yaml = { "prettier" },
+		html = { "prettier" },
 	},
 	format_on_save = {
 		timeout_ms = 500,
