@@ -30,3 +30,8 @@ vim.opt.pumheight = 10 -- Popup menu height
 vim.o.winborder = "rounded"
 vim.g.have_nerd_font = true
 vim.opt.laststatus = 3
+
+local sysname = vim.loop.os_uname().sysname
+if sysname == "Windows_NT" then
+	vim.o.shell = "powershell.exe"
+end
