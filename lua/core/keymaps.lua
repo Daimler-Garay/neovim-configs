@@ -17,9 +17,14 @@ map("n", "<C-b>", "<C-b>zz")
 map("v", "J", ":m '>+1<CR>gv=gv") -- move blocks of code easily (Up)
 map("v", "K", ":m '<-2<CR>gv=gv") -- move blocks of code easily (Down)
 
--- Neotest
-map("n", "<leader>tr", function()
-	require("neotest").run.run()
+-- Flash
+
+map({ "n", "x", "o" }, "zk", function()
+	require("flash").jump()
+end)
+
+map({ "n", "x", "o" }, "Zk", function()
+	require("flash").treesitter()
 end)
 
 -- Snippets
@@ -62,70 +67,6 @@ map("n", "<C-h>", nvim_tmux_nav.NvimTmuxNavigateLeft)
 map("n", "<C-j>", nvim_tmux_nav.NvimTmuxNavigateDown)
 map("n", "<C-k>", nvim_tmux_nav.NvimTmuxNavigateUp)
 map("n", "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight)
-
--- Dap
-local dap = require("dap")
-local dapui = require("dapui")
-
-dapui.setup({
-	expand_lines = true,
-	controls = { enabled = false },
-	floating = { border = "rounded" },
-})
-
-dap.listeners.after.event_initialized["dapui_config"] = function()
-	dapui.open()
-end
-dap.listeners.before.event_terminated["dapui_config"] = function()
-	dapui.close()
-end
-dap.listeners.before.event_exited["dapui_config"] = function()
-	dapui.close()
-end
-
-vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DiagnosticError", linehl = "", numhl = "" })
-vim.fn.sign_define("DapBreakpointCondition", { text = "◆", texthl = "DiagnosticWarn", linehl = "", numhl = "" })
-vim.fn.sign_define("DapStopped", { text = "▸", texthl = "DiagnosticInfo", linehl = "Visual", numhl = "" })
-
-map("n", "<leader>du", function()
-	dapui.toggle()
-end, { noremap = true, silent = true })
-
-map({ "n", "v" }, "<leader>dw", function()
-	dapui.eval(nil, { enter = true })
-end, { noremap = true, silent = true })
-
-map({ "n", "v" }, "Q", function()
-	dapui.eval()
-end, { noremap = true, silent = true })
-
-map("n", "<leader>dB", function()
-	dap.set_breakpoiont(vim.fn.input("Breakpoint condition: "))
-end)
-
-map("n", "<leader>db", function()
-	dap.toggle_breakpoint()
-end)
-
-map("n", "<leader>dc", function()
-	dap.continue()
-end)
-
-map("n", "<leader>di", function()
-	dap.step_into()
-end)
-
-map("n", "<leader>do", function()
-	dap.step_out()
-end)
-
-map("n", "<leadeer>dO", function()
-	dap.step_over()
-end)
-
-map("n", "<leader>dr", function()
-	dap.repl.toggle()
-end)
 
 -- Auto Commands
 vim.api.nvim_create_autocmd("TextYankPost", {

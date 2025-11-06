@@ -1,35 +1,36 @@
 vim.pack.add({
 	{ src = "https://github.com/stevearc/oil.nvim" },
-	{ src = "https://github.com/nvim-mini/mini.pick" },
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "master" },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", version = "master" },
+	{ src = "https://github.com/folke/flash.nvim" },
 	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
 	{ src = "https://github.com/mason-org/mason.nvim" },
 	{ src = "https://github.com/L3MON4D3/LuaSnip" },
 	{ src = "https://github.com/stevearc/conform.nvim" },
-	{ src = "http://github.com/mrcjkb/rustaceanvim" },
+	{ src = "https://github.com/mrcjkb/rustaceanvim" },
 	{ src = "https://github.com/saecki/crates.nvim" },
 	{ src = "https://github.com/kdheepak/lazygit.nvim" },
 	{ src = "https://github.com/projekt0n/github-nvim-theme" },
 	{ src = "https://github.com/alexghergh/nvim-tmux-navigation" },
-	{ src = "https://github.com/nvim-neotest/neotest" },
-	{ src = "https://github.com/nvim-neotest/nvim-nio" },
-	{ src = "https://github.com/nvim-lua/plenary.nvim" },
-	{ src = "https://github.com/antoinemadec/FixCursorHold.nvim" },
-	{ src = "https://github.com/nvim-neotest/neotest-python" },
-	{ src = "https://github.com/mfussenegger/nvim-dap" },
-	{ src = "https://github.com/rcarriga/nvim-dap-ui" },
 	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("*") },
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
+	{ src = "https://github.com/nvim-mini/mini.pick" },
 	{ src = "https://github.com/nvim-mini/mini.extra", version = vim.version.range("*") },
+	{ src = "https://github.com/nvim-mini/mini.surround", version = vim.version.range("*") },
+	{ src = "https://github.com/abecodes/tabout.nvim" },
+	{ src = "https://github.com/windwp/nvim-autopairs" },
 })
 
 require("core.options")
 require("core.keymaps")
 require("mason").setup()
+require("tabout").setup()
+require("nvim-autopairs").setup()
+require("mini.surround").setup({})
 require("oil").setup({
 	view_options = { show_hidden = true },
-	lsp_file_methods = { enbaled = true, timeout_ms = 1000, autosave_changes = true },
-	columns = { "permissions", "icon" },
+	lsp_file_methods = { enabled = true, timeout_ms = 1000, autosave_changes = true },
+	columns = { "icon" },
 })
 require("crates").setup({
 	lsp = {
@@ -61,16 +62,47 @@ require("conform").setup({
 		lsp_format = "fallback",
 	},
 })
-require("nvim-treesitter.config").setup({
-	highlight = {
-		enable = true,
-		additional_vim_regex_highlighting = false,
-	},
-})
-require("neotest").setup({
-	adapters = {
-		require("neotest-python"),
-		require("rustaceanvim.neotest"),
+
+require("nvim-treesitter.configs").setup({
+	ensure_installed = { "lua", "python", "rust", "typescript" },
+	highlight = { enable = true, additional_vim_regex_highlighting = false },
+	indent = { enable = true },
+	textobjects = {
+		move = {
+			enable = true,
+			set_jumps = true,
+			goto_next_start = {
+				["[f"] = "@function.outer",
+				["]["] = "@class.outer",
+			},
+			goto_previous_start = {
+				["]f"] = "@function.outer",
+				["[["] = "@class.outer",
+			},
+			goto_previous_end = {
+				["[F"] = "@function.outer",
+				["[]"] = "@class.outer",
+			},
+		},
+		select = {
+			enable = true,
+
+			lookahead = true,
+
+			keymaps = {
+				["af"] = "@function.outer",
+				["if"] = "@function.inner",
+				["ac"] = "@class.outer",
+				["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+				["as"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
+			},
+			selection_modes = {
+				["@parameter.outer"] = "v", -- charwise
+				["@function.outer"] = "V", -- linewise
+				["@class.outer"] = "<c-v>", -- blockwise
+			},
+			include_surrounding_whitespace = true,
+		},
 	},
 })
 require("mini.extra").setup({})
