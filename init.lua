@@ -1,4 +1,5 @@
 vim.pack.add({
+	{ src = "https://github.com//j-hui/fidget.nvim" },
 	{ src = "https://github.com/stevearc/oil.nvim" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "master" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", version = "master" },
@@ -24,9 +25,9 @@ vim.pack.add({
 require("core.options")
 require("core.keymaps")
 require("mason").setup()
+require("fidget").setup()
 require("tabout").setup()
 require("nvim-autopairs").setup()
-require("mini.surround").setup({})
 require("oil").setup({
 	view_options = { show_hidden = true },
 	lsp_file_methods = { enabled = true, timeout_ms = 1000, autosave_changes = true },
@@ -105,6 +106,7 @@ require("nvim-treesitter.configs").setup({
 		},
 	},
 })
+require("mini.surround").setup({})
 require("mini.extra").setup({})
 require("mini.pick").setup({})
 require("blink.cmp").setup({
@@ -145,6 +147,11 @@ require("blink.cmp").setup({
 vim.lsp.enable({ "lua_ls", "rust_analyzer", "tinymist", "pylsp", "ts_ls", "yamlls", "jsonls" })
 
 -- theme
+require("github-theme").setup({
+	options = {
+		transparent = true,
+	},
+})
 vim.cmd.colorscheme("github_dark_high_contrast")
 vim.cmd(":hi statusline guibg=NONE")
 

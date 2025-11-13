@@ -9,7 +9,7 @@
     "crates.nvim": [],
     "fidget.nvim": {
       "rev": "e32b672",
-      "src": "https://github.com/j-hui/fidget.nvim"
+      "src": "https://github.com//j-hui/fidget.nvim"
     },
     "flash.nvim": {
       "rev": "fcea7ff",

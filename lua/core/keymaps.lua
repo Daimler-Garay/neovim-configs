@@ -40,7 +40,7 @@ map({ "i", "s" }, "<C-K>", function()
 end, { silent = true })
 
 -- Oil
-map("n", "\\", "<cmd>Oil --float<cr>")
+map("n", "\\", "<cmd>Oil<cr>")
 
 -- Lazygit
 map("n", "<leader>lg", "<cmd>LazyGit<cr>")
@@ -139,25 +139,26 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- manage plugins
 local function pack_clean()
-	local active_plugins = {}
+	local plugins = vim.pack.get()
 	local unused_plugins = {}
 
-	for _, plugin in ipairs(vim.pack.get()) do
-		active_plugins[plugin.spec.name] = plugin.active
-	end
-
-	for _, plugin in ipairs(vim.pack.get()) do
-		if not active_plugins[plugin.spec.name] then
+	for _, plugin in ipairs(plugins) do
+		if not plugin.active and plugin.spec and type(plugin.spec.src) == "string" and plugin.spec.src ~= "" then
 			table.insert(unused_plugins, plugin.spec.name)
 		end
 	end
 
 	if #unused_plugins == 0 then
-		print("No unused plugins.")
+		print("No unused managed plugins.")
 		return
 	end
 
-	local choice = vim.fn.confirm("Remove unused plugins?", "&Yes\n&No", 2)
+	print("Unused managed plugins:")
+	for _, name in ipairs(unused_plugins) do
+		print("  - " .. name)
+	end
+
+	local choice = vim.fn.confirm("Remove these plugins from disk?", "&Yes\n&No", 2)
 	if choice == 1 then
 		vim.pack.del(unused_plugins)
 	end
