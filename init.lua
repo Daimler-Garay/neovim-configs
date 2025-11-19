@@ -107,6 +107,7 @@ require("nvim-treesitter.configs").setup({
 	},
 })
 require("mini.surround").setup({})
+
 require("mini.extra").setup({})
 require("mini.pick").setup({})
 require("blink.cmp").setup({
@@ -128,16 +129,19 @@ require("blink.cmp").setup({
 					{ "source_name" },
 				},
 			},
+			winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
 		},
 		documentation = {
 			window = {
 				scrollbar = false,
+				border = "rounded",
+				winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
 			},
 			auto_show = false,
 			auto_show_delay_ms = 500,
 		},
 		list = {
-			max_items = 70,
+			max_items = 50,
 			selection = { preselect = false, auto_insert = true },
 		},
 	},
