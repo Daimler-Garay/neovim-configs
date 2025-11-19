@@ -17,6 +17,10 @@
     },
     "github-nvim-theme": [],
     "lazygit.nvim": [],
+    "lualine.nvim": {
+      "rev": "3946f01",
+      "src": "https://github.com/nvim-lualine/lualine.nvim"
+    },
     "mason.nvim": [],
     "mini.extra": {
       "rev": "87be97a",

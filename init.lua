@@ -1,5 +1,6 @@
 vim.pack.add({
-	{ src = "https://github.com//j-hui/fidget.nvim" },
+	{ src = "https://github.com/nvim-lualine/lualine.nvim" },
+	{ src = "https://github.com/j-hui/fidget.nvim" },
 	{ src = "https://github.com/stevearc/oil.nvim" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "master" },
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", version = "master" },
@@ -24,6 +25,7 @@ vim.pack.add({
 
 require("core.options")
 require("core.keymaps")
+require("lua.plugins.lualine")
 require("mason").setup()
 require("fidget").setup()
 require("tabout").setup()
