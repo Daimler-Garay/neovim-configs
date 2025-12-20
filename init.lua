@@ -52,7 +52,7 @@ require("crates").setup({
 require("conform").setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
-		python = { "ruff" },
+		python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
 		typescript = { "prettier" },
 		json = { "prettier" },
 		yaml = { "prettier" },
@@ -148,7 +148,7 @@ require("blink.cmp").setup({
 })
 
 -- lsp
-vim.lsp.enable({ "lua_ls", "rust_analyzer", "tinymist", "pylsp", "ts_ls", "yamlls", "jsonls" })
+vim.lsp.enable({ "lua_ls", "rust_analyzer", "tinymist", "pyright", "ts_ls", "yamlls", "jsonls", "ruff" })
 
 -- theme
 require("github-theme").setup({
