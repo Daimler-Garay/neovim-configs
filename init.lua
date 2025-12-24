@@ -1,54 +1,58 @@
-vim.pack.add({
-	{ src = "https://github.com/j-hui/fidget.nvim" },
-	{ src = "https://github.com/stevearc/oil.nvim" },
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "master" },
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", version = "master" },
-	{ src = "https://github.com/folke/flash.nvim" },
-	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
-	{ src = "https://github.com/mason-org/mason.nvim" },
-	{ src = "https://github.com/L3MON4D3/LuaSnip" },
-	{ src = "https://github.com/stevearc/conform.nvim" },
-	{ src = "https://github.com/mrcjkb/rustaceanvim" },
-	{ src = "https://github.com/saecki/crates.nvim" },
-	{ src = "https://github.com/kdheepak/lazygit.nvim" },
-	{ src = "https://github.com/projekt0n/github-nvim-theme" },
-	{ src = "https://github.com/alexghergh/nvim-tmux-navigation" },
-	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("*") },
+-- ORGANIZED BY AI
+
+-- Plugins ---------------------------------------------------------------------
+
+local plugins = {
+	-- Core
+	{ src = "https://github.com/nvim-mini/mini.nvim" },
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
-	{ src = "https://github.com/nvim-mini/mini.pick" },
-	{ src = "https://github.com/nvim-mini/mini.extra", version = vim.version.range("*") },
-	{ src = "https://github.com/nvim-mini/mini.surround", version = vim.version.range("*") },
+
+	-- Syntax / editing
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
+	{ src = "https://github.com/L3MON4D3/LuaSnip" },
 	{ src = "https://github.com/abecodes/tabout.nvim" },
 	{ src = "https://github.com/windwp/nvim-autopairs" },
-})
+
+	-- UX
+	{ src = "https://github.com/j-hui/fidget.nvim" },
+	{ src = "https://github.com/folke/flash.nvim" },
+	{ src = "https://github.com/stevearc/oil.nvim" },
+
+	-- Tooling
+	{ src = "https://github.com/mason-org/mason.nvim" },
+	{ src = "https://github.com/stevearc/conform.nvim" },
+	{ src = "https://github.com/kdheepak/lazygit.nvim" },
+
+	-- Language-specific
+	{ src = "https://github.com/mrcjkb/rustaceanvim" },
+	{ src = "https://github.com/saecki/crates.nvim" },
+	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
+
+	-- Completion
+	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("*") },
+
+	-- Theme
+	{ src = "https://github.com/projekt0n/github-nvim-theme" },
+
+	{ src = "https://github.com/alexghergh/nvim-tmux-navigation" },
+}
+
+vim.pack.add(plugins)
+
+-- Boot / basics ----------------------------------------------------------------
 
 require("core.options")
 require("core.keymaps")
-require("mason").setup()
-require("fidget").setup()
-require("tabout").setup()
-require("nvim-autopairs").setup()
-require("oil").setup({
-	view_options = { show_hidden = true },
-	lsp_file_methods = { enabled = true, timeout_ms = 1000, autosave_changes = true },
-	columns = { "icon" },
-})
-require("crates").setup({
-	lsp = {
-		enabled = true,
-		actions = true,
-		completion = true,
-		hover = true,
-	},
+require("plugins.debug")
 
-	completion = {
-		crates = {
-			enabled = true,
-			max_results = 8,
-			min_chars = 3,
-		},
-	},
-})
+-- Treesitter -------------------------------------------------------------------
+
+require("nvim-treesitter").install({ "rust", "python" })
+
+-- Tooling ----------------------------------------------------------------------
+
+require("mason").setup()
+
 require("conform").setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
@@ -64,52 +68,48 @@ require("conform").setup({
 	},
 })
 
-require("nvim-treesitter.configs").setup({
-	ensure_installed = { "lua", "python", "rust", "typescript" },
-	highlight = { enable = true, additional_vim_regex_highlighting = false },
-	indent = { enable = true },
-	textobjects = {
-		move = {
-			enable = true,
-			set_jumps = true,
-			goto_next_start = {
-				["[f"] = "@function.outer",
-				["]["] = "@class.outer",
-			},
-			goto_previous_start = {
-				["]f"] = "@function.outer",
-				["[["] = "@class.outer",
-			},
-			goto_previous_end = {
-				["[F"] = "@function.outer",
-				["[]"] = "@class.outer",
-			},
-		},
-		select = {
-			enable = true,
+-- UI / navigation --------------------------------------------------------------
 
-			lookahead = true,
+require("fidget").setup()
+require("tabout").setup()
+require("nvim-autopairs").setup()
 
-			keymaps = {
-				["af"] = "@function.outer",
-				["if"] = "@function.inner",
-				["ac"] = "@class.outer",
-				["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
-				["as"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
-			},
-			selection_modes = {
-				["@parameter.outer"] = "v", -- charwise
-				["@function.outer"] = "V", -- linewise
-				["@class.outer"] = "<c-v>", -- blockwise
-			},
-			include_surrounding_whitespace = true,
+require("oil").setup({
+	view_options = { show_hidden = true },
+	lsp_file_methods = {
+		enabled = true,
+		timeout_ms = 1000,
+		autosave_changes = true,
+	},
+	columns = { "icon" },
+})
+
+-- Rust -------------------------------------------------------------------------
+
+require("crates").setup({
+	lsp = {
+		enabled = true,
+		actions = true,
+		completion = true,
+		hover = true,
+	},
+	completion = {
+		crates = {
+			enabled = true,
+			max_results = 8,
+			min_chars = 3,
 		},
 	},
 })
-require("mini.surround").setup({})
 
+-- mini.nvim --------------------------------------------------------------------
+
+require("mini.surround").setup({})
 require("mini.extra").setup({})
 require("mini.pick").setup({})
+
+-- Completion -------------------------------------------------------------------
+
 require("blink.cmp").setup({
 	snippets = { preset = "luasnip" },
 	signature = { enabled = true },
@@ -147,26 +147,37 @@ require("blink.cmp").setup({
 	},
 })
 
--- lsp
-vim.lsp.enable({ "lua_ls", "rust_analyzer", "tinymist", "pyright", "ts_ls", "yamlls", "jsonls", "ruff" })
+-- LSP ----------------------------------------------------------------------------
 
--- theme
-require("github-theme").setup({
-	options = {
-		transparent = true,
-	},
+vim.lsp.enable({
+	"lua_ls",
+	"rust_analyzer",
+	"tinymist",
+	"pyright",
+	"ts_ls",
+	"yamlls",
+	"jsonls",
+	"ruff",
 })
+
+-- Theme -------------------------------------------------------------------------
+
+require("github-theme").setup({
+	options = { transparent = true },
+})
+
 vim.cmd.colorscheme("github_dark_high_contrast")
-vim.cmd(":hi statusline guibg=NONE")
+vim.cmd("hi statusline guibg=NONE")
 
--- snippets
-local sysname = vim.loop.os_uname().sysname
-local snippet_path
+-- Snippets ----------------------------------------------------------------------
 
-if sysname == "Windows_NT" then
-	snippet_path = vim.fn.expand("~/AppData/Local/nvim/snippets/")
-else
-	snippet_path = vim.fn.expand("~/.config/nvim/snippets/")
+local function get_snippet_path()
+	local sysname = vim.loop.os_uname().sysname
+	if sysname == "Windows_NT" then
+		return vim.fn.expand("~/AppData/Local/nvim/snippets/")
+	end
+	return vim.fn.expand("~/.config/nvim/snippets/")
 end
+
 require("luasnip").setup({ enable_autosnippets = true })
-require("luasnip.loaders.from_lua").load({ paths = snippet_path })
+require("luasnip.loaders.from_lua").load({ paths = get_snippet_path() })

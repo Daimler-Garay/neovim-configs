@@ -1,9 +1,5 @@
 {
   "plugins": {
-    "FixCursorHold.nvim": {
-      "rev": "1900f89dc17c603eec29960f57c00bd9ae696495",
-      "src": "https://github.com/antoinemadec/FixCursorHold.nvim"
-    },
     "LuaSnip": {
       "rev": "ccf25a5452b8697a823de3e5ecda63ed3d723b79",
       "src": "https://github.com/L3MON4D3/LuaSnip"
@@ -20,10 +16,6 @@
     "crates.nvim": {
       "rev": "ac9fa498a9edb96dc3056724ff69d5f40b898453",
       "src": "https://github.com/saecki/crates.nvim"
-    },
-    "csvview.nvim": {
-      "rev": "688bcc7437b577de000f71a2d406271c79e2a545",
-      "src": "https://github.com/hat0uma/csvview.nvim"
     },
     "fidget.nvim": {
       "rev": "e32b672d8fd343f9d6a76944fedb8c61d7d8111a",
@@ -45,47 +37,25 @@
       "rev": "ad7146aa61dcaeb54fa900144d768f040090bff0",
       "src": "https://github.com/mason-org/mason.nvim"
     },
-    "mini.extra": {
-      "rev": "87be97a",
-      "src": "https://github.com/nvim-mini/mini.extra",
-      "version": ">=0.0.0"
-    },
-    "mini.pick": {
-      "rev": "bb764a57b349ad3e8d5e7d8855b0c6104e2cc17c",
-      "src": "https://github.com/nvim-mini/mini.pick"
-    },
-    "mini.surround": {
-      "rev": "5aab42f",
-      "src": "https://github.com/nvim-mini/mini.surround",
-      "version": ">=0.0.0"
-    },
-    "neotest": {
-      "rev": "2cf3544fb55cdd428a9a1b7154aea9c9823426e8",
-      "src": "https://github.com/nvim-neotest/neotest"
-    },
-    "neotest-golang": {
-      "rev": "0ada81e50429a071cc7d349301762e4ee04dcb2a",
-      "src": "https://github.com/fredrikaverpil/neotest-golang"
-    },
-    "neotest-python": {
-      "rev": "1b1b1abf928f32bbd6a7d183f7ffc80a591eb162",
-      "src": "https://github.com/nvim-neotest/neotest-python"
+    "mini.nvim": {
+      "rev": "7e55c3d2c04da134085a31156196836f80a89982",
+      "src": "https://github.com/nvim-mini/mini.nvim"
     },
     "nvim-autopairs": {
       "rev": "7a2c97c",
       "src": "https://github.com/windwp/nvim-autopairs"
     },
     "nvim-dap": {
-      "rev": "7523676a4be17644587aa47e4d42f6f7646d4727",
+      "rev": "818cd8787a77a97703eb1d9090543a374f79a9ac",
       "src": "https://github.com/mfussenegger/nvim-dap"
-    },
-    "nvim-dap-go": {
-      "rev": "b4421153ead5d726603b02743ea40cf26a51ed5f",
-      "src": "https://github.com/leoluz/nvim-dap-go"
     },
     "nvim-dap-ui": {
       "rev": "cf91d5e2d07c72903d052f5207511bf7ecdb7122",
       "src": "https://github.com/rcarriga/nvim-dap-ui"
+    },
+    "nvim-dap-virtual-text": {
+      "rev": "fbdb48c2ed45f4a8293d0d483f7730d24467ccb6",
+      "src": "https://github.com/theHamsta/nvim-dap-virtual-text"
     },
     "nvim-nio": {
       "rev": "21f5324bfac14e22ba26553caf69ec76ae8a7662",
@@ -96,14 +66,9 @@
       "src": "https://github.com/alexghergh/nvim-tmux-navigation"
     },
     "nvim-treesitter": {
-      "rev": "42fc28ba",
+      "rev": "6e42d823ce0a5a76180c473c119c7677738a09d1",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
-      "version": "'master'"
-    },
-    "nvim-treesitter-textobjects": {
-      "rev": "5ca4aaa",
-      "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
-      "version": "'master'"
+      "version": "'main'"
     },
     "nvim-web-devicons": {
       "rev": "b8221e4",
@@ -112,10 +77,6 @@
     "oil.nvim": {
       "rev": "7e1cd7703ff2924d7038476dcbc04b950203b902",
       "src": "https://github.com/stevearc/oil.nvim"
-    },
-    "plenary.nvim": {
-      "rev": "b9fd5226c2f76c951fc8ed5923d85e4de065e509",
-      "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "rustaceanvim": {
       "rev": "93644c7cde9b69abc44e5f2442704f352faaa6d7",

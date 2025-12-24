@@ -1,74 +1,116 @@
+-- ORGANIZED BY AI
+
+-- Leaders ---------------------------------------------------------------------
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Keymap helper ----------------------------------------------------------------
+
 local map = vim.keymap.set
-map("n", "<Esc>", "<cmd>nohlsearch<CR>")
-map("t", "<Esc><Esc>", "<C-\\><C-n>")
-map("n", "<C-h>", "<C-w><C-h>")
-map("n", "<C-l>", "<C-w><C-l>")
-map("n", "<C-j>", "<C-w><C-j>")
-map("n", "<C-k>", "<C-w><C-k>")
-map("n", "<leader>w", ":update<CR>")
-map("n", "<leader>q", ":quit<CR>")
-map("n", "<C-d>", "<C-d>zz")
-map("n", "<C-u>", "<C-u>zz")
-map("n", "<C-f>", "<C-f>zz")
-map("n", "<C-b>", "<C-b>zz")
-map("v", "J", ":m '>+1<CR>gv=gv") -- move blocks of code easily (Up)
-map("v", "K", ":m '<-2<CR>gv=gv") -- move blocks of code easily (Down)
+local function n(lhs, rhs, opts)
+	map("n", lhs, rhs, opts)
+end
+local function v(lhs, rhs, opts)
+	map("v", lhs, rhs, opts)
+end
+local function t(lhs, rhs, opts)
+	map("t", lhs, rhs, opts)
+end
+local function nxol(lhs, rhs, opts)
+	map({ "n", "x", "o" }, lhs, rhs, opts)
+end
+
+-- Core mappings ----------------------------------------------------------------
+
+-- Quality-of-life
+n("<Esc>", "<cmd>nohlsearch<CR>")
+t("<Esc><Esc>", "<C-\\><C-n>")
+
+-- Window navigation (overridden later by tmux-nav if enabled)
+n("<C-h>", "<C-w><C-h>")
+n("<C-j>", "<C-w><C-j>")
+n("<C-k>", "<C-w><C-k>")
+n("<C-l>", "<C-w><C-l>")
+
+-- Save / quit
+n("<leader>w", "<cmd>update<CR>")
+n("<leader>q", "<cmd>quit<CR>")
+
+-- Keep cursor centered while scrolling
+for _, key in ipairs({ "<C-d>", "<C-u>", "<C-f>", "<C-b>" }) do
+	n(key, key .. "zz")
+end
+
+-- Move selected lines up/down
+v("J", ":m '>+1<CR>gv=gv") -- down
+v("K", ":m '<-2<CR>gv=gv") -- up
+
+-- Plugin mappings --------------------------------------------------------------
 
 -- Flash
-
-map({ "n", "x", "o" }, "zk", function()
+nxol("zk", function()
 	require("flash").jump()
 end)
-
-map({ "n", "x", "o" }, "Zk", function()
+nxol("Zk", function()
 	require("flash").treesitter()
 end)
 
--- Snippets
-local ls = require("luasnip")
-map("i", "<C-e>", function()
-	ls.expand_or_jump(1)
-end, { silent = true })
-map({ "i", "s" }, "<C-J>", function()
-	ls.jump(1)
-end, { silent = true })
-map({ "i", "s" }, "<C-K>", function()
-	ls.jump(-1)
-end, { silent = true })
+-- Snippets (LuaSnip)
+do
+	local ls = require("luasnip")
+	map("i", "<C-e>", function()
+		ls.expand_or_jump(1)
+	end, { silent = true })
+	map({ "i", "s" }, "<C-J>", function()
+		ls.jump(1)
+	end, { silent = true })
+	map({ "i", "s" }, "<C-K>", function()
+		ls.jump(-1)
+	end, { silent = true })
+end
 
 -- Oil
-map("n", "\\", "<cmd>Oil<cr>")
+n("\\", "<cmd>Oil<CR>")
 
 -- Lazygit
-map("n", "<leader>lg", "<cmd>LazyGit<cr>")
+n("<leader>lg", "<cmd>LazyGit<CR>")
 
--- Minipick
-map("n", "<leader>sf", function()
+-- mini.pick / mini.extra
+n("<leader>sf", function()
 	require("mini.pick").builtin.files()
 end)
-map("n", "<leader>sg", function()
+n("<leader>sg", function()
 	require("mini.pick").builtin.grep_live()
 end)
-
-map("n", "<leader>sb", function()
+n("<leader>sb", function()
 	require("mini.pick").builtin.buffers()
 end)
-
-map("n", "<leader>sd", function()
+n("<leader>sd", function()
 	require("mini.extra").pickers.diagnostic({ scope = "current" })
 end)
 
--- Tmux Navigation
-local nvim_tmux_nav = require("nvim-tmux-navigation")
-map("n", "<C-h>", nvim_tmux_nav.NvimTmuxNavigateLeft)
-map("n", "<C-j>", nvim_tmux_nav.NvimTmuxNavigateDown)
-map("n", "<C-k>", nvim_tmux_nav.NvimTmuxNavigateUp)
-map("n", "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight)
+-- Tmux Navigation (overrides <C-h/j/k/l>) -------------------------------------
 
--- Auto Commands
+do
+	local tmux = require("nvim-tmux-navigation")
+	n("<C-h>", tmux.NvimTmuxNavigateLeft)
+	n("<C-j>", tmux.NvimTmuxNavigateDown)
+	n("<C-k>", tmux.NvimTmuxNavigateUp)
+	n("<C-l>", tmux.NvimTmuxNavigateRight)
+end
+
+-- Autocommands -----------------------------------------------------------------
+
+-- Treesitter
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "rs", "py", "lua" },
+	callback = function(args)
+		vim.treesitter.start(args.buf)
+	end,
+})
+
+-- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
@@ -77,91 +119,101 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
--- dont auto comment on new line
+-- Don't auto-comment new lines
 vim.api.nvim_create_autocmd("BufEnter", { command = [[set formatoptions-=cro]] })
+
+-- LSP attach mappings + document highlight ------------------------------------
+
+local function client_supports_method(client, method, bufnr)
+	if vim.fn.has("nvim-0.11") == 1 then
+		return client:supports_method(method, bufnr)
+	end
+	return client.supports_method(method, { bufnr = bufnr })
+end
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
 	callback = function(event)
-		local lap = function(keys, func)
-			map("n", keys, func)
+		local bufnr = event.buf
+
+		-- Buffer-local LSP mappings
+		local function lmap(lhs, rhs)
+			map("n", lhs, rhs, { buffer = bufnr })
 		end
 
-		lap("gl", vim.diagnostic.open_float)
-		lap("K", vim.lsp.buf.hover)
-		lap("gs", vim.lsp.buf.signature_help)
-		lap("gD", vim.lsp.buf.declaration)
-		lap("<leader>la", vim.lsp.buf.code_action)
-		lap("<leader>ff", vim.lsp.buf.format)
-		lap("<leader>Wa", vim.lsp.buf.add_workspace_folder)
-		lap("<leader>Wr", vim.lsp.buf.remove_workspace_folder)
-		lap("<leader>Wl", function()
+		lmap("gl", vim.diagnostic.open_float)
+		lmap("K", vim.lsp.buf.hover)
+		lmap("gs", vim.lsp.buf.signature_help)
+		lmap("gD", vim.lsp.buf.declaration)
+
+		lmap("<leader>la", vim.lsp.buf.code_action)
+		lmap("<leader>ff", vim.lsp.buf.format)
+
+		lmap("<leader>Wa", vim.lsp.buf.add_workspace_folder)
+		lmap("<leader>Wr", vim.lsp.buf.remove_workspace_folder)
+		lmap("<leader>Wl", function()
 			print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 		end)
-		lap("<leader>v", "<cmd>vsplit | lua vim.lsp.buf.definition()<cr>")
 
-		local function client_supports_method(client, method, bufnr)
-			if vim.fn.has("nvim-0.11") == 1 then
-				return client:supports_method(method, bufnr)
-			else
-				return client.supports_method(method, { bufnr = bufnr })
-			end
+		lmap("<leader>v", "<cmd>vsplit | lua vim.lsp.buf.definition()<CR>")
+
+		-- Document highlight if supported
+		local client = vim.lsp.get_client_by_id(event.data.client_id)
+		if not client then
+			return
 		end
 
-		local client = vim.lsp.get_client_by_id(event.data.client_id)
-		if
-			client
-			and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf)
-		then
-			local highlight_augroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
+		if client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, bufnr) then
+			local hl_group = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
+
 			vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-				buffer = event.buf,
-				group = highlight_augroup,
+				buffer = bufnr,
+				group = hl_group,
 				callback = vim.lsp.buf.document_highlight,
 			})
 
 			vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
-				buffer = event.buf,
-				group = highlight_augroup,
+				buffer = bufnr,
+				group = hl_group,
 				callback = vim.lsp.buf.clear_references,
 			})
 
 			vim.api.nvim_create_autocmd("LspDetach", {
 				group = vim.api.nvim_create_augroup("lsp-detach", { clear = true }),
-				callback = function(event2)
+				callback = function(detach_event)
 					vim.lsp.buf.clear_references()
-					vim.api.nvim_clear_autocmds({ group = "lsp-highlight", buffer = event2.buf })
+					vim.api.nvim_clear_autocmds({ group = "lsp-highlight", buffer = detach_event.buf })
 				end,
 			})
 		end
 	end,
 })
 
--- manage plugins
-local function pack_clean()
-	local plugins = vim.pack.get()
-	local unused_plugins = {}
+-- Managed plugins: clean unused ------------------------------------------------
 
-	for _, plugin in ipairs(plugins) do
-		if not plugin.active and plugin.spec and type(plugin.spec.src) == "string" and plugin.spec.src ~= "" then
-			table.insert(unused_plugins, plugin.spec.name)
+local function pack_clean()
+	local unused = {}
+
+	for _, plugin in ipairs(vim.pack.get()) do
+		local is_managed = plugin.spec and type(plugin.spec.src) == "string" and plugin.spec.src ~= ""
+		if is_managed and not plugin.active then
+			table.insert(unused, plugin.spec.name)
 		end
 	end
 
-	if #unused_plugins == 0 then
+	if #unused == 0 then
 		print("No unused managed plugins.")
 		return
 	end
 
 	print("Unused managed plugins:")
-	for _, name in ipairs(unused_plugins) do
+	for _, name in ipairs(unused) do
 		print("  - " .. name)
 	end
 
-	local choice = vim.fn.confirm("Remove these plugins from disk?", "&Yes\n&No", 2)
-	if choice == 1 then
-		vim.pack.del(unused_plugins)
+	if vim.fn.confirm("Remove these plugins from disk?", "&Yes\n&No", 2) == 1 then
+		vim.pack.del(unused)
 	end
 end
 
-vim.keymap.set("n", "<leader>pc", pack_clean)
+n("<leader>pc", pack_clean)
