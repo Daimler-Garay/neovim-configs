@@ -73,6 +73,7 @@ require("conform").setup({
 require("fidget").setup()
 require("tabout").setup()
 require("nvim-autopairs").setup()
+require("plugins.lualine")
 
 require("oil").setup({
 	view_options = { show_hidden = true },

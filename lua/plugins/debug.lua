@@ -1,9 +1,16 @@
 -- Plugins
 vim.pack.add({
+	{ src = "https://github.com/nvim-lua/plenary.nvim" },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+
 	{ src = "https://github.com/mfussenegger/nvim-dap" },
 	{ src = "https://github.com/rcarriga/nvim-dap-ui" },
 	{ src = "https://github.com/theHamsta/nvim-dap-virtual-text" },
+
+	-- neotest
 	{ src = "https://github.com/nvim-neotest/nvim-nio" },
+	{ src = "https://github.com/nvim-neotest/neotest" },
+	{ src = "https://github.com/nvim-neotest/neotest-python" },
 })
 
 -- =========================
@@ -78,11 +85,54 @@ map("n", "<leader>dq", function()
 	dap.terminate()
 end, opts)
 
+-- =========================
+-- neotest (keymaps + setup)
+-- =========================
+local neotest = require("neotest")
+
+local adapters = {
+	require("neotest-python")({
+		runner = "pytest",
+		python = ".venv/bin/python",
+	}),
+	require("rustaceanvim.neotest"),
+}
+
+neotest.setup({
+	adapters = adapters,
+	-- output / summary default positions are fine; customize later if desired
+})
+
+-- Namespaced under <leader>t*
+map("n", "<leader>tt", function()
+	neotest.run.run()
+end, opts) -- nearest
+map("n", "<leader>tT", function()
+	neotest.run.run(vim.fn.expand("%"))
+end, opts) -- file
+map("n", "<leader>td", function()
+	neotest.run.run({ strategy = "dap" })
+end, opts) -- debug nearest via dap
+map("n", "<leader>ts", function()
+	neotest.summary.toggle()
+end, opts)
+map("n", "<leader>to", function()
+	neotest.output.open({ enter = true, auto_close = true })
+end, opts)
+map("n", "<leader>tO", function()
+	neotest.output_panel.toggle()
+end, opts)
+map("n", "<leader>tS", function()
+	neotest.run.stop()
+end, opts)
+
 -- =========================================
 -- Rust: let rustaceanvim handle Rust DAP
 -- =========================================
 vim.g.rustaceanvim = {
-	tools = {},
+	tools = {
+		test_executor = "background",
+	},
 	server = {
 		on_attach = function(_, bufnr)
 			map("n", "<leader>rr", "<cmd>RustLsp runnables<cr>", vim.tbl_extend("force", opts, { buffer = bufnr }))
@@ -100,7 +150,6 @@ vim.g.rustaceanvim = {
 -- =========================================
 -- Python: debugpy adapter + configurations
 -- =========================================
-
 dap.adapters.python = function(cb, _)
 	cb({
 		type = "executable",
