@@ -100,7 +100,6 @@ local adapters = {
 
 neotest.setup({
 	adapters = adapters,
-	-- output / summary default positions are fine; customize later if desired
 })
 
 -- Namespaced under <leader>t*
@@ -127,23 +126,23 @@ map("n", "<leader>tS", function()
 end, opts)
 
 -- =========================================
--- Rust: let rustaceanvim handle Rust DAP
+-- Rust: debugpy adapter + configurations
 -- =========================================
-vim.g.rustaceanvim = {
-	tools = {
-		test_executor = "background",
-	},
-	server = {
-		on_attach = function(_, bufnr)
-			map("n", "<leader>rr", "<cmd>RustLsp runnables<cr>", vim.tbl_extend("force", opts, { buffer = bufnr }))
-			map("n", "<leader>rd", "<cmd>RustLsp debuggables<cr>", vim.tbl_extend("force", opts, { buffer = bufnr }))
+dap.adapters.codelldb = {
+	type = "executable",
+	command = "/home/dgaray/.vscode-server-insiders/extensions/vadimcn.vscode-lldb-1.12.0/adapter/codelldb",
+}
+
+dap.configurations.rust = {
+	{
+		name = "Launch file",
+		type = "codelldb",
+		request = "launch",
+		program = function()
+			return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
 		end,
-		default_settings = {
-			["rust-analyzer"] = {},
-		},
-		dap = {
-			adapter = require("rustaceanvim.config").get_codelldb_adapter("codelldb", "/usr/lib/liblldb.so"),
-		},
+		cwd = "${workspaceFolder}",
+		stopOnEntry = false,
 	},
 }
 

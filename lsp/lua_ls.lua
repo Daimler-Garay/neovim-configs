@@ -80,4 +80,9 @@ return {
 		"selene.yml",
 		".git",
 	},
+	settings = {
+		Lua = {
+			hint = { enable = true },
+		},
+	},
 }

@@ -17,6 +17,7 @@ local plugins = {
 	{ src = "https://github.com/j-hui/fidget.nvim" },
 	{ src = "https://github.com/folke/flash.nvim" },
 	{ src = "https://github.com/stevearc/oil.nvim" },
+	{ src = "https://github.com/chrisgrieser/nvim-lsp-endhints" },
 
 	-- Tooling
 	{ src = "https://github.com/mason-org/mason.nvim" },
@@ -33,7 +34,6 @@ local plugins = {
 
 	-- Theme
 	{ src = "https://github.com/ribru17/bamboo.nvim" },
-
 	{ src = "https://github.com/alexghergh/nvim-tmux-navigation" },
 }
 
@@ -44,6 +44,8 @@ vim.pack.add(plugins)
 require("core.options")
 require("core.keymaps")
 require("plugins.debug")
+require("plugins.rustaceanvim")
+require("lsp-endhints").setup()
 
 -- Treesitter -------------------------------------------------------------------
 
@@ -74,6 +76,7 @@ require("fidget").setup()
 require("tabout").setup()
 require("nvim-autopairs").setup()
 require("plugins.lualine")
+require("lsp-endhints").setup()
 
 require("oil").setup({
 	view_options = { show_hidden = true },

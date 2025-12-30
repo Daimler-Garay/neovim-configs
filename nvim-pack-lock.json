@@ -69,6 +69,10 @@
       "rev": "fbdb48c2ed45f4a8293d0d483f7730d24467ccb6",
       "src": "https://github.com/theHamsta/nvim-dap-virtual-text"
     },
+    "nvim-lsp-endhints": {
+      "rev": "782b728f7cfb530116502921fd99cbdba357285b",
+      "src": "https://github.com/chrisgrieser/nvim-lsp-endhints"
+    },
     "nvim-nio": {
       "rev": "21f5324bfac14e22ba26553caf69ec76ae8a7662",
       "src": "https://github.com/nvim-neotest/nvim-nio"
