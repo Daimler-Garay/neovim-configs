@@ -4,6 +4,10 @@
       "rev": "ccf25a5452b8697a823de3e5ecda63ed3d723b79",
       "src": "https://github.com/L3MON4D3/LuaSnip"
     },
+    "bamboo.nvim": {
+      "rev": "1309bc88bffcf1bedc3e84e7fa9004de93da774a",
+      "src": "https://github.com/ribru17/bamboo.nvim"
+    },
     "blink.cmp": {
       "rev": "327fff91fe6af358e990be7be1ec8b78037d2138",
       "src": "https://github.com/saghen/blink.cmp",
@@ -24,10 +28,6 @@
     "flash.nvim": {
       "rev": "fcea7ff",
       "src": "https://github.com/folke/flash.nvim"
-    },
-    "github-nvim-theme": {
-      "rev": "c106c9472154d6b2c74b74565616b877ae8ed31d",
-      "src": "https://github.com/projekt0n/github-nvim-theme"
     },
     "lazygit.nvim": {
       "rev": "2305deed25bc61b866d5d39189e9105a45cf1cfb",

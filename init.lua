@@ -32,7 +32,7 @@ local plugins = {
 	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("*") },
 
 	-- Theme
-	{ src = "https://github.com/projekt0n/github-nvim-theme" },
+	{ src = "https://github.com/ribru17/bamboo.nvim" },
 
 	{ src = "https://github.com/alexghergh/nvim-tmux-navigation" },
 }
@@ -163,12 +163,10 @@ vim.lsp.enable({
 
 -- Theme -------------------------------------------------------------------------
 
-require("github-theme").setup({
-	options = { transparent = true },
+require("bamboo").setup({
+	style = "multiplex",
 })
-
-vim.cmd.colorscheme("github_dark_high_contrast")
-vim.cmd("hi statusline guibg=NONE")
+require("bamboo").load()
 
 -- Snippets ----------------------------------------------------------------------
 
