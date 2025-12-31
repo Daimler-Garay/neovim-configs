@@ -1,5 +1,3 @@
--- ORGANIZED BY AI
-
 -- Leaders ---------------------------------------------------------------------
 
 vim.g.mapleader = " "
@@ -21,13 +19,31 @@ local function nxol(lhs, rhs, opts)
 	map({ "n", "x", "o" }, lhs, rhs, opts)
 end
 
--- Core mappings ----------------------------------------------------------------
-
--- Quality-of-life
+-- QOL --------------------------------------------------------------------------
 n("<Esc>", "<cmd>nohlsearch<CR>")
 t("<Esc><Esc>", "<C-\\><C-n>")
+
+-- LSP --------------------------------------------------------------------------
+n("<leader>rn", function()
+	return ":Rename " .. vim.fn.expand("<cword>")
+end, { expr = true })
+
+-- Toggle Inlay/Diagnostic ------------------------------------------------------
 n("<leader>vv", function()
 	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end)
+
+local diagnostics_enabled = true
+
+n("<leader>vd", function()
+	diagnostics_enabled = not diagnostics_enabled
+
+	vim.diagnostic.config({
+		virtual_text = diagnostics_enabled,
+		update_in_insert = diagnostics_enabled,
+		severity_sort = diagnostics_enabled,
+		underline = diagnostics_enabled,
+	})
 end)
 
 -- Window navigation (overridden later by tmux-nav if enabled)
@@ -80,7 +96,7 @@ n("\\", "<cmd>Oil<CR>")
 n("<leader>lg", "<cmd>LazyGit<CR>")
 
 -- mini.pick / mini.extra
-n("<leader>sf", function()
+n("<leader>f", function()
 	require("mini.pick").builtin.files()
 end)
 n("<leader>sg", function()
@@ -102,28 +118,6 @@ do
 	n("<C-k>", tmux.NvimTmuxNavigateUp)
 	n("<C-l>", tmux.NvimTmuxNavigateRight)
 end
-
--- Autocommands -----------------------------------------------------------------
-
--- Treesitter
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "rs", "py", "lua" },
-	callback = function(args)
-		vim.treesitter.start(args.buf)
-	end,
-})
-
--- Highlight on yank
-vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-	callback = function()
-		vim.hl.on_yank()
-	end,
-})
-
--- Don't auto-comment new lines
-vim.api.nvim_create_autocmd("BufEnter", { command = [[set formatoptions-=cro]] })
 
 -- Managed plugins: clean unused ------------------------------------------------
 

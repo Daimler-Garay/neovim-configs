@@ -29,6 +29,10 @@
       "rev": "fcea7ff",
       "src": "https://github.com/folke/flash.nvim"
     },
+    "inc-rename.nvim": {
+      "rev": "2597bccb57d1b570fbdbd4adf88b955f7ade715b",
+      "src": "https://github.com/smjonas/inc-rename.nvim"
+    },
     "lazygit.nvim": {
       "rev": "2305deed25bc61b866d5d39189e9105a45cf1cfb",
       "src": "https://github.com/kdheepak/lazygit.nvim"

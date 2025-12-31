@@ -1,4 +1,5 @@
--- ORGANIZED BY AI
+-- Pre-plugin Configs
+require("plugins.rustaceanvim")
 
 -- Plugins ---------------------------------------------------------------------
 
@@ -12,6 +13,7 @@ local plugins = {
 	{ src = "https://github.com/L3MON4D3/LuaSnip" },
 	{ src = "https://github.com/abecodes/tabout.nvim" },
 	{ src = "https://github.com/windwp/nvim-autopairs" },
+	{ src = "https://github.com/smjonas/inc-rename.nvim" },
 
 	-- UX
 	{ src = "https://github.com/j-hui/fidget.nvim" },
@@ -38,6 +40,7 @@ local plugins = {
 
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
 
+	-- Debugger
 	{ src = "https://github.com/mfussenegger/nvim-dap" },
 	{ src = "https://github.com/rcarriga/nvim-dap-ui" },
 	{ src = "https://github.com/theHamsta/nvim-dap-virtual-text" },
@@ -55,113 +58,29 @@ vim.pack.add(plugins)
 
 require("core.options")
 require("core.keymaps")
-require("plugins.debug")
-require("plugins.rustaceanvim")
-require("lsp-endhints").setup()
-
--- Treesitter -------------------------------------------------------------------
-
-require("nvim-treesitter").install({ "rust", "python" })
+require("core.autocmd")
 
 -- Tooling ----------------------------------------------------------------------
+require("plugins.tools")
 
-require("mason").setup()
-
-require("conform").setup({
-	formatters_by_ft = {
-		lua = { "stylua" },
-		python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
-		typescript = { "prettier" },
-		json = { "prettier" },
-		yaml = { "prettier" },
-		html = { "prettier" },
-	},
-	format_on_save = {
-		timeout_ms = 500,
-		lsp_format = "fallback",
-	},
-})
+require("plugins.coding")
 
 -- UI / navigation --------------------------------------------------------------
 
-require("fidget").setup()
-require("tabout").setup()
-require("nvim-autopairs").setup()
-require("plugins.lualine")
-require("lsp-endhints").setup()
+require("plugins.ui")
 
-require("oil").setup({
-	view_options = { show_hidden = true },
-	lsp_file_methods = {
-		enabled = true,
-		timeout_ms = 1000,
-		autosave_changes = true,
-	},
-	columns = { "icon" },
-})
+-- Debugger + Testing -----------------------------------------------------------
 
--- Rust -------------------------------------------------------------------------
-
-require("crates").setup({
-	lsp = {
-		enabled = true,
-		actions = true,
-		completion = true,
-		hover = true,
-	},
-	completion = {
-		crates = {
-			enabled = true,
-			max_results = 8,
-			min_chars = 3,
-		},
-	},
-})
+require("plugins.debug")
+require("plugins.neotest")
 
 -- mini.nvim --------------------------------------------------------------------
 
-require("mini.surround").setup({})
-require("mini.extra").setup({})
-require("mini.pick").setup({})
+require("plugins.mini")
 
 -- Completion -------------------------------------------------------------------
 
-require("blink.cmp").setup({
-	snippets = { preset = "luasnip" },
-	signature = { enabled = true },
-	appearance = {
-		use_nvim_cmp_as_default = false,
-		nerd_font_variant = "normal",
-	},
-	completion = {
-		menu = {
-			scrolloff = 1,
-			scrollbar = false,
-			draw = {
-				columns = {
-					{ "kind_icon" },
-					{ "label", "label_description", gap = 1 },
-					{ "kind" },
-					{ "source_name" },
-				},
-			},
-			winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
-		},
-		documentation = {
-			window = {
-				scrollbar = false,
-				border = "rounded",
-				winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:BlinkCmpDocCursorLine,Search:None",
-			},
-			auto_show = false,
-			auto_show_delay_ms = 500,
-		},
-		list = {
-			max_items = 50,
-			selection = { preselect = false, auto_insert = true },
-		},
-	},
-})
+require("plugins.completion")
 
 -- LSP ----------------------------------------------------------------------------
 
@@ -178,20 +97,8 @@ vim.lsp.enable({
 
 -- Theme -------------------------------------------------------------------------
 
-require("bamboo").setup({
-	style = "multiplex",
-})
-require("bamboo").load()
+require("plugins.theme")
 
 -- Snippets ----------------------------------------------------------------------
 
-local function get_snippet_path()
-	local sysname = vim.loop.os_uname().sysname
-	if sysname == "Windows_NT" then
-		return vim.fn.expand("~/AppData/Local/nvim/snippets/")
-	end
-	return vim.fn.expand("~/.config/nvim/snippets/")
-end
-
-require("luasnip").setup({ enable_autosnippets = true })
-require("luasnip.loaders.from_lua").load({ paths = get_snippet_path() })
+require("plugins.snippets")
