@@ -1,18 +1,3 @@
--- Plugins
-vim.pack.add({
-	{ src = "https://github.com/nvim-lua/plenary.nvim" },
-	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
-
-	{ src = "https://github.com/mfussenegger/nvim-dap" },
-	{ src = "https://github.com/rcarriga/nvim-dap-ui" },
-	{ src = "https://github.com/theHamsta/nvim-dap-virtual-text" },
-
-	-- neotest
-	{ src = "https://github.com/nvim-neotest/nvim-nio" },
-	{ src = "https://github.com/nvim-neotest/neotest" },
-	{ src = "https://github.com/nvim-neotest/neotest-python" },
-})
-
 -- =========================
 -- Core DAP (UI + keymaps)
 -- =========================
@@ -126,11 +111,16 @@ map("n", "<leader>tS", function()
 end, opts)
 
 -- =========================================
--- Rust: debugpy adapter + configurations
+-- Rust: codelldb adapter + configurations
 -- =========================================
 dap.adapters.codelldb = {
-	type = "executable",
-	command = "/home/dgaray/.vscode-server-insiders/extensions/vadimcn.vscode-lldb-1.12.0/adapter/codelldb",
+	name = "Launch",
+	type = "server",
+	port = "${port}",
+	executable = {
+		command = "codelldb",
+		args = { "--port", "${port}" },
+	},
 }
 
 dap.configurations.rust = {
@@ -149,40 +139,4 @@ dap.configurations.rust = {
 -- =========================================
 -- Python: debugpy adapter + configurations
 -- =========================================
-dap.adapters.python = function(cb, _)
-	cb({
-		type = "executable",
-		command = "python",
-		args = { "-m", "debugpy.adapter" },
-	})
-end
-
-dap.configurations.python = {
-	{
-		name = "Python: file",
-		type = "python",
-		request = "launch",
-		program = "${file}",
-		cwd = "${workspaceFolder}",
-		console = "integratedTerminal",
-		justMyCode = true,
-	},
-	{
-		name = "Python: module",
-		type = "python",
-		request = "launch",
-		module = function()
-			return vim.fn.input("Module (e.g. pkg.module): ")
-		end,
-		cwd = "${workspaceFolder}",
-		console = "integratedTerminal",
-		justMyCode = true,
-	},
-	{
-		name = "Python: attach (localhost:5678)",
-		type = "python",
-		request = "attach",
-		connect = { host = "127.0.0.1", port = 5678 },
-		justMyCode = true,
-	},
-}
+require("dap-python").setup("uv")

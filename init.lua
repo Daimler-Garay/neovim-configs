@@ -35,6 +35,18 @@ local plugins = {
 	-- Theme
 	{ src = "https://github.com/ribru17/bamboo.nvim" },
 	{ src = "https://github.com/alexghergh/nvim-tmux-navigation" },
+
+	{ src = "https://github.com/nvim-lua/plenary.nvim" },
+
+	{ src = "https://github.com/mfussenegger/nvim-dap" },
+	{ src = "https://github.com/rcarriga/nvim-dap-ui" },
+	{ src = "https://github.com/theHamsta/nvim-dap-virtual-text" },
+	{ src = "https://github.com/mfussenegger/nvim-dap-python" },
+
+	-- neotest
+	{ src = "https://github.com/nvim-neotest/nvim-nio" },
+	{ src = "https://github.com/nvim-neotest/neotest" },
+	{ src = "https://github.com/nvim-neotest/neotest-python" },
 }
 
 vim.pack.add(plugins)
