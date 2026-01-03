@@ -8,6 +8,20 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+-- Restore cursor to previous position
+vim.api.nvim_create_autocmd("BufReadPost", {
+	callback = function(args)
+		local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
+		local line_count = vim.api.nvim_buf_line_count(args.buf)
+		if mark[1] > 0 and mark[1] <= line_count then
+			vim.api.nvim_win_set_cursor(0, mark)
+			vim.schedule(function()
+				vim.cmd("normal! zz")
+			end)
+		end
+	end,
+})
+
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
@@ -17,8 +31,53 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
+-- Highlight on hover
+vim.api.nvim_create_autocmd("CursorMoved", {
+	group = vim.api.nvim_create_augroup("LspReferenceHighlight", { clear = true }),
+	callback = function()
+		if vim.fn.mode() ~= "i" then
+			local clients = vim.lsp.get_clients({ bufnr = 0 })
+			local supports_highlight = false
+			for _, client in ipairs(clients) do
+				if client.server_capabilities.documentHighlightProvider then
+					supports_highlight = true -- Found a supporting client no need to check others
+					break
+				end
+			end
+
+			if supports_highlight then
+				vim.lsp.buf.clear_references()
+				vim.lsp.buf.document_highlight()
+			end
+		end
+	end,
+})
+
+vim.api.nvim_create_autocmd("CursorMovedI", {
+	group = "LspReferenceHighlight",
+	callback = function()
+		vim.lsp.buf.clear_references()
+	end,
+})
+
 -- Don't auto-comment new lines
 vim.api.nvim_create_autocmd("BufEnter", { command = [[set formatoptions-=cro]] })
+
+-- Curosr line (active)
+vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
+	group = vim.api.nvim_create_augroup("active_cursorline", { clear = true }),
+	callback = function()
+		vim.opt_local.cursorline = true
+	end,
+})
+
+-- Curosr line (inactive)
+vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
+	group = "active_cursorline",
+	callback = function()
+		vim.opt_local.cursorline = false
+	end,
+})
 
 -- LSP Attach
 
@@ -29,7 +88,6 @@ local function client_supports_method(client, method, bufnr)
 	return client.supports_method(method, { bufnr = bufnr })
 end
 
--- Only set map if there isn't already a buffer-local map for {mode,lhs}
 local function buf_map_if_free(bufnr, mode, lhs, rhs, opts)
 	opts = opts or {}
 	opts.buffer = bufnr

@@ -67,6 +67,7 @@
 --- * [Lua.runtime.path](https://luals.github.io/wiki/settings/#runtimepath)
 --- * [Lua.workspace.library](https://luals.github.io/wiki/settings/#workspacelibrary)
 ---
+--- @type vim.lsp.Config
 return {
 	cmd = { "lua-language-server" },
 	filetypes = { "lua" },
@@ -80,9 +81,43 @@ return {
 		"selene.yml",
 		".git",
 	},
+	on_init = function(client)
+		if client.workspace_folders then
+			local path = client.workspace_folders[1].name
+			if
+				path ~= vim.fn.stdpath("config")
+				and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
+			then
+				return
+			end
+		end
+
+		local lua_settings = client.config.settings.Lua or {}
+
+		client.config.settings.Lua = vim.tbl_deep_extend("force", lua_settings, {
+			runtime = {
+				version = "LuaJIT",
+				path = {
+					"lua/?.lua",
+					"lua/?/init.lua",
+				},
+			},
+			workspace = {
+				checkThirdParty = false,
+				library = {
+					vim.env.VIMRUNTIME,
+					-- Consider adding your config's lua/ directory:
+					-- vim.fn.stdpath("config") .. "/lua",
+					-- Or (slow) all runtimepath files:
+					-- vim.api.nvim_get_runtime_file("", true),
+				},
+			},
+		})
+	end,
 	settings = {
 		Lua = {
-			hint = { enable = true },
+			codeLens = { enable = true },
+			hint = { enable = true, semicolon = "Disable" },
 		},
 	},
 }
