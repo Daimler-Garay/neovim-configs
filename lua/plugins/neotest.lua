@@ -17,7 +17,7 @@ neotest.setup({
 	adapters = adapters,
 })
 
--- Namespaced under <leader>t*
+-- Keymaps
 map("n", "<leader>tt", function()
 	neotest.run.run()
 end, opts) -- nearest

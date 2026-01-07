@@ -15,16 +15,20 @@ local plugins = {
 	{ src = "https://github.com/windwp/nvim-autopairs" },
 	{ src = "https://github.com/smjonas/inc-rename.nvim" },
 
-	-- UX
+	-- UI/UX
 	{ src = "https://github.com/j-hui/fidget.nvim" },
 	{ src = "https://github.com/folke/flash.nvim" },
 	{ src = "https://github.com/stevearc/oil.nvim" },
 	{ src = "https://github.com/chrisgrieser/nvim-lsp-endhints" },
+	{ src = "https://github.com/folke/trouble.nvim" },
+	{ src = "https://github.com/nvim-lualine/lualine.nvim" },
 
 	-- Tooling
 	{ src = "https://github.com/mason-org/mason.nvim" },
 	{ src = "https://github.com/stevearc/conform.nvim" },
 	{ src = "https://github.com/kdheepak/lazygit.nvim" },
+	{ src = "https://github.com/sindrets/diffview.nvim" },
+	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
 
 	-- Language-specific
 	{ src = "https://github.com/mrcjkb/rustaceanvim" },

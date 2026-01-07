@@ -29,6 +29,8 @@ vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DiagnosticError", 
 vim.fn.sign_define("DapBreakpointCondition", { text = "◆", texthl = "DiagnosticWarn", linehl = "", numhl = "" })
 vim.fn.sign_define("DapStopped", { text = "▸", texthl = "DiagnosticInfo", linehl = "Visual", numhl = "" })
 
+-- Keymaps
+
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 

@@ -2,8 +2,42 @@
 require("fidget").setup()
 
 -- QOL
-require("plugins.lualine")
 require("lsp-endhints").setup()
+require("trouble").setup({
+	modes = {
+		test = {
+			mode = "diagnostics",
+			preview = {
+				type = "split",
+				relative = "win",
+				position = "right",
+				size = 0.3,
+			},
+		},
+	},
+})
 
--- Treesitter
-require("nvim-treesitter").install({ "rust", "python", "typescript", "lua" })
+-- Lualine
+local trouble = require("trouble")
+
+local symbols = trouble.statusline({
+	mode = "lsp_document_symbols",
+	groups = {},
+	title = false,
+	filter = { range = true },
+	format = "{kind_icon}{symbol.name:Normal}",
+	hl_group = "lualine_c_normal",
+})
+
+local opts = {
+	sections = {
+		lualine_c = {
+			{
+				symbols.get,
+				cond = symbols.has,
+			},
+		},
+	},
+}
+
+require("lualine").setup(opts)

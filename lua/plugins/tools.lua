@@ -27,3 +27,6 @@ require("oil").setup({
 	},
 	columns = { "icon" },
 })
+
+require("diffview").setup({})
+require("gitsigns").setup({})

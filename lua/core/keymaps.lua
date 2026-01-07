@@ -28,22 +28,9 @@ n("<leader>rn", function()
 	return ":Rename " .. vim.fn.expand("<cword>")
 end, { expr = true })
 
--- Toggle Inlay/Diagnostic ------------------------------------------------------
+-- Toggle Inlay ------------------------------------------------------
 n("<leader>vv", function()
-	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-end)
-
-local diagnostics_enabled = true
-
-n("<leader>vd", function()
-	diagnostics_enabled = not diagnostics_enabled
-
-	vim.diagnostic.config({
-		virtual_text = diagnostics_enabled,
-		update_in_insert = diagnostics_enabled,
-		severity_sort = diagnostics_enabled,
-		underline = diagnostics_enabled,
-	})
+	require("lsp-endhints").toggle()
 end)
 
 -- Window navigation (overridden later by tmux-nav if enabled)
@@ -104,9 +91,6 @@ n("<leader>sg", function()
 end)
 n("<leader>sb", function()
 	require("mini.pick").builtin.buffers()
-end)
-n("<leader>sd", function()
-	require("mini.extra").pickers.diagnostic({ scope = "current" })
 end)
 
 -- Tmux Navigation (overrides <C-h/j/k/l>) -------------------------------------
