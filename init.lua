@@ -11,9 +11,7 @@ local plugins = {
 	-- Syntax / editing
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
 	{ src = "https://github.com/L3MON4D3/LuaSnip" },
-	{ src = "https://github.com/abecodes/tabout.nvim" },
 	{ src = "https://github.com/windwp/nvim-autopairs" },
-	{ src = "https://github.com/smjonas/inc-rename.nvim" },
 
 	-- UI/UX
 	{ src = "https://github.com/j-hui/fidget.nvim" },

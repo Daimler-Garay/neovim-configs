@@ -21,6 +21,10 @@
       "rev": "ac9fa498a9edb96dc3056724ff69d5f40b898453",
       "src": "https://github.com/saecki/crates.nvim"
     },
+    "diffview.nvim": {
+      "rev": "4516612fe98ff56ae0415a259ff6361a89419b0a",
+      "src": "https://github.com/sindrets/diffview.nvim"
+    },
     "fidget.nvim": {
       "rev": "e32b672d8fd343f9d6a76944fedb8c61d7d8111a",
       "src": "https://github.com/j-hui/fidget.nvim"
@@ -29,9 +33,9 @@
       "rev": "fcea7ff",
       "src": "https://github.com/folke/flash.nvim"
     },
-    "inc-rename.nvim": {
-      "rev": "2597bccb57d1b570fbdbd4adf88b955f7ade715b",
-      "src": "https://github.com/smjonas/inc-rename.nvim"
+    "gitsigns.nvim": {
+      "rev": "30e5c516f03e0a0a4f71300c52abad481ee90337",
+      "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "lazygit.nvim": {
       "rev": "2305deed25bc61b866d5d39189e9105a45cf1cfb",
@@ -110,9 +114,9 @@
       "rev": "93644c7cde9b69abc44e5f2442704f352faaa6d7",
       "src": "https://github.com/mrcjkb/rustaceanvim"
     },
-    "tabout.nvim": {
-      "rev": "9a34994",
-      "src": "https://github.com/abecodes/tabout.nvim"
+    "trouble.nvim": {
+      "rev": "bd67efe408d4816e25e8491cc5ad4088e708a69a",
+      "src": "https://github.com/folke/trouble.nvim"
     },
     "typst-preview.nvim": {
       "rev": "64469f832c4d214683c12e0fceba98055cb1ce3b",
