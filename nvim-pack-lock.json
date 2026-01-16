@@ -118,9 +118,9 @@
       "rev": "93644c7cde9b69abc44e5f2442704f352faaa6d7",
       "src": "https://github.com/mrcjkb/rustaceanvim"
     },
-    "tabout.nvim": {
-      "rev": "9a34994",
-      "src": "https://github.com/abecodes/tabout.nvim"
+    "trouble.nvim": {
+      "rev": "bd67efe408d4816e25e8491cc5ad4088e708a69a",
+      "src": "https://github.com/folke/trouble.nvim"
     },
     "trouble.nvim": {
       "rev": "bd67efe408d4816e25e8491cc5ad4088e708a69a",

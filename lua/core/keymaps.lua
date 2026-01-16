@@ -24,11 +24,15 @@ n("<Esc>", "<cmd>nohlsearch<CR>")
 t("<Esc><Esc>", "<C-\\><C-n>")
 
 -- LSP --------------------------------------------------------------------------
-n("<leader>rn", function()
-	return ":Rename " .. vim.fn.expand("<cword>")
-end, { expr = true })
 
--- Toggle Inlay ------------------------------------------------------
+-- Trouble ----------------------------------------------------------------------
+n("<leader>xx", "<cmd>Trouble diagnostics toggle<cr>")
+n("<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>")
+n("<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>")
+n("<leader>cl", "<cmd>Trouble lsp toggle focus=false<cr>")
+n("<leader>xL", "<cmd>Trouble loclist toggle<cr>")
+n("<leader>xl", "<cmd>Trouble qflist toggle<cr>")
+-- Toggle Inlay -----------------------------------------------------------------
 n("<leader>vv", function()
 	require("lsp-endhints").toggle()
 end)

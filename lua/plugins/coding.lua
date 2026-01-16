@@ -1,4 +1,3 @@
-require("tabout").setup()
 require("nvim-autopairs").setup()
 require("conform").setup({
 	formatters_by_ft = {
@@ -13,7 +12,4 @@ require("conform").setup({
 		timeout_ms = 500,
 		lsp_format = "fallback",
 	},
-})
-require("inc_rename").setup({
-	cmd_name = "Rename",
 })
