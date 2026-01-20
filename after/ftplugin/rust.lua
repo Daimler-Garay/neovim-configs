@@ -21,3 +21,14 @@ end, sets)
 map("n", "<leader>la", function()
 	vim.cmd.RustLsp("codeAction")
 end, sets)
+map({ "n" }, "<leader>n", function()
+	local cur = vim.fn.expand("%")
+	local num = cur:sub(-4, -4)
+	local next = cur:sub(1, -5) .. (num + 1) .. ".rs"
+	if vim.fn.filereadable(next) == 1 then
+		vim.cmd("bd")
+		vim.cmd("edit " .. next)
+	else
+		print("All problems solved for this topic.")
+	end
+end)
