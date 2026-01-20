@@ -37,7 +37,7 @@ local plugins = {
 	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("*") },
 
 	-- Theme
-	{ src = "https://github.com/ribru17/bamboo.nvim" },
+	{ src = "https://github.com/bluz71/vim-moonfly-colors", name = "moonfly" },
 	{ src = "https://github.com/alexghergh/nvim-tmux-navigation" },
 
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
@@ -99,8 +99,13 @@ vim.lsp.enable({
 
 -- Theme -------------------------------------------------------------------------
 
-require("plugins.theme")
-
+vim.g.moonflyCursorColor = true
+vim.g.moonflyNormalPmenu = true
+vim.g.moonflyNormalFloat = true
+vim.g.moonflyUnderlineMatchParen = true
+vim.g.moonflyVirtualTextColor = true
+vim.g.moonflyWinSeparator = 2
+vim.cmd.colorscheme("moonfly")
 -- Snippets ----------------------------------------------------------------------
 
 require("plugins.snippets")
