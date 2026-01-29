@@ -7,6 +7,10 @@ require("conform").setup({
 		json = { "prettier" },
 		yaml = { "prettier" },
 		html = { "prettier" },
+		bash = { "beautysh" },
+		zsh = { "beautysh" },
+		markdown = { "prettier" },
+		kdl = { "kdlfmt" },
 	},
 	format_on_save = {
 		timeout_ms = 500,
