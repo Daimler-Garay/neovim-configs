@@ -11,6 +11,7 @@ require("conform").setup({
 		zsh = { "beautysh" },
 		markdown = { "prettier" },
 		kdl = { "kdlfmt" },
+		css = { "prettier" },
 	},
 	format_on_save = {
 		timeout_ms = 500,

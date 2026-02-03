@@ -29,13 +29,25 @@
       "rev": "fcea7ff",
       "src": "https://github.com/folke/flash.nvim"
     },
+    "friendly-snippets": {
+      "rev": "6cd7280adead7f586db6fccbd15d2cac7e2188b9",
+      "src": "https://github.com/rafamadriz/friendly-snippets"
+    },
     "gitsigns.nvim": {
       "rev": "30e5c516f03e0a0a4f71300c52abad481ee90337",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
+    "image.nvim": {
+      "rev": "446a8a5cc7a3eae3185ee0c697732c32a5547a0b",
+      "src": "https://github.com/3rd/image.nvim"
+    },
     "lazygit.nvim": {
       "rev": "2305deed25bc61b866d5d39189e9105a45cf1cfb",
       "src": "https://github.com/kdheepak/lazygit.nvim"
+    },
+    "live-preview.nvim": {
+      "rev": "f056b4b859d54595afce53e67129f7684380d3ba",
+      "src": "https://github.com/brianhuster/live-preview.nvim"
     },
     "lualine.nvim": {
       "rev": "47f91c416daef12db467145e16bed5bbfe00add8",
@@ -106,9 +118,17 @@
       "rev": "7e1cd7703ff2924d7038476dcbc04b950203b902",
       "src": "https://github.com/stevearc/oil.nvim"
     },
+    "outline.nvim": {
+      "rev": "ead1820d49c8e79ce89cab1c2c318981b695c9d2",
+      "src": "https://github.com/hedyhli/outline.nvim"
+    },
     "plenary.nvim": {
       "rev": "b9fd5226c2f76c951fc8ed5923d85e4de065e509",
       "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
+    "render-markdown.nvim": {
+      "rev": "b3efd6408e4e4d66d6caaee0579e72b579bc0884",
+      "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "rustaceanvim": {
       "rev": "93644c7cde9b69abc44e5f2442704f352faaa6d7",

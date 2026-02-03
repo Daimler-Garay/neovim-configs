@@ -17,6 +17,16 @@ require("trouble").setup({
 	},
 })
 
+-- Markdown
+require("render-markdown").setup({
+	completions = { blink = { enabled = true } },
+})
+
+-- Images
+require("image").setup({
+	backend = "kitty",
+})
+
 -- Lualine
 local trouble = require("trouble")
 
