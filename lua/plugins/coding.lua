@@ -7,6 +7,8 @@ require("conform").setup({
 		json = { "prettier" },
 		yaml = { "prettier" },
 		html = { "prettier" },
+		css = { "prettier" },
+		javascript = { "prettier" },
 	},
 	format_on_save = {
 		timeout_ms = 500,

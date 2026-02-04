@@ -30,3 +30,4 @@ require("oil").setup({
 
 require("diffview").setup({})
 require("gitsigns").setup({})
+require("outline").setup({})

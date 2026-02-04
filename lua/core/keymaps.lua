@@ -22,6 +22,7 @@ end
 -- QOL --------------------------------------------------------------------------
 n("<Esc>", "<cmd>nohlsearch<CR>")
 t("<Esc><Esc>", "<C-\\><C-n>")
+n("<leader>o", "<cmd>Outline!<CR>")
 
 -- LSP --------------------------------------------------------------------------
 
@@ -59,7 +60,7 @@ v("K", ":m '<-2<CR>gv=gv") -- up
 -- Plugin mappings --------------------------------------------------------------
 
 -- Flash
-nxol("zk", function()
+nxol("fl", function()
 	require("flash").jump()
 end)
 nxol("Zk", function()

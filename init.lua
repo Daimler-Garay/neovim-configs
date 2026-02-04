@@ -27,11 +27,16 @@ local plugins = {
 	{ src = "https://github.com/kdheepak/lazygit.nvim" },
 	{ src = "https://github.com/sindrets/diffview.nvim" },
 	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
+	{ src = "https://github.com/hedyhli/outline.nvim" },
+	{ src = "https://github.com/brianhuster/live-preview.nvim" },
+	{ src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
+	{ src = "https://github.com/3rd/image.nvim" },
 
 	-- Language-specific
 	{ src = "https://github.com/mrcjkb/rustaceanvim" },
 	{ src = "https://github.com/saecki/crates.nvim" },
 	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
+	{ src = "https://github.com/rafamadriz/friendly-snippets" },
 
 	-- Completion
 	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("*") },
@@ -96,6 +101,8 @@ vim.lsp.enable({
 	"jsonls",
 	"ruff",
 	"marksman",
+	"html",
+	"cssls",
 })
 
 -- Theme -------------------------------------------------------------------------

@@ -33,54 +33,17 @@
 --- - organize imports
 --- - remove unused code
 ---
---- ### Vue support
+--- Use the `:LspTypescriptGoToSourceDefinition` command to navigate to the source definition of a symbol (e.g., jump to the original implementation instead of type definitions).
 ---
---- As of 2.0.0, the Vue language server no longer supports TypeScript itself. Instead, a plugin
---- adds Vue support to this language server.
+--- ### Monorepo support
 ---
---- *IMPORTANT*: It is crucial to ensure that `@vue/typescript-plugin` and `@vue/language-server `are of identical versions.
+--- `ts_ls` supports monorepos by default. It will automatically find the `tsconfig.json` or `jsconfig.json` corresponding to the package you are working on.
+--- This works without the need of spawning multiple instances of `ts_ls`, saving memory.
 ---
---- ```lua
---- vim.lsp.config('ts_ls', {
----   init_options = {
----     plugins = {
----       {
----         name = "@vue/typescript-plugin",
----         location = "/usr/local/lib/node_modules/@vue/typescript-plugin",
----         languages = {"javascript", "typescript", "vue"},
----       },
----     },
----   },
----   filetypes = {
----     "javascript",
----     "typescript",
----     "vue",
----   },
---- })
+--- It is recommended to use the same version of TypeScript in all packages, and therefore have it available in your workspace root. The location of the TypeScript binary will be determined automatically, but only once.
 ---
---- -- You must make sure the Vue language server is setup
---- -- e.g. vim.lsp.config('vue_ls')
---- -- See vue_ls's section for more information
---- ```
----
---- `location` MUST be defined. If the plugin is installed in `node_modules`,
---- `location` can have any value.
----
---- `languages` must include `vue` even if it is listed in `filetypes`.
----
---- `filetypes` is extended here to include Vue SFC.
 
-local inlayHints = {
-	includeInlayParameterNameHints = "all",
-	includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-	includeInlayFunctionParameterTypeHints = true,
-	includeInlayVariableTypeHints = true,
-	includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-	includeInlayPropertyDeclarationTypeHints = true,
-	includeInlayFunctionLikeReturnTypeHints = true,
-	includeInlayEnumMemberValueHints = true,
-}
-
+---@type vim.lsp.Config
 return {
 	init_options = { hostInfo = "neovim" },
 	cmd = { "typescript-language-server", "--stdio" },
@@ -92,15 +55,24 @@ return {
 		"typescriptreact",
 		"typescript.tsx",
 	},
-	root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
-	settings = {
-		typescript = {
-			inlayHints = inlayHints,
-		},
-		javascript = {
-			inlayHints = inlayHints,
-		},
-	},
+	root_dir = function(bufnr, on_dir)
+		-- The project root is where the LSP can be started from
+		-- As stated in the documentation above, this LSP supports monorepos and simple projects.
+		-- We select then from the project root, which is identified by the presence of a package
+		-- manager lock file.
+		local root_markers = { "package-lock.json", "yarn.lock", "pnpm-lock.yaml", "bun.lockb", "bun.lock" }
+		-- Give the root markers equal priority by wrapping them in a table
+		root_markers = vim.fn.has("nvim-0.11.3") == 1 and { root_markers, { ".git" } }
+			or vim.list_extend(root_markers, { ".git" })
+		-- exclude deno
+		local deno_path = vim.fs.root(bufnr, { "deno.json", "deno.jsonc", "deno.lock" })
+		local project_root = vim.fs.root(bufnr, root_markers)
+		if deno_path and (not project_root or #deno_path >= #project_root) then
+			return
+		end
+		-- We fallback to the current working directory if no project root is found
+		on_dir(project_root or vim.fn.getcwd())
+	end,
 	handlers = {
 		-- handle rename request for certain code actions like extracting functions / types
 		["_typescript.rename"] = function(_, result, ctx)
@@ -114,6 +86,33 @@ return {
 			}, client.offset_encoding)
 			vim.lsp.buf.rename()
 			return vim.NIL
+		end,
+	},
+	commands = {
+		["editor.action.showReferences"] = function(command, ctx)
+			local client = assert(vim.lsp.get_client_by_id(ctx.client_id))
+			local file_uri, position, references = unpack(command.arguments)
+
+			local quickfix_items = vim.lsp.util.locations_to_items(references --[[@as any]], client.offset_encoding)
+			vim.fn.setqflist({}, " ", {
+				title = command.title,
+				items = quickfix_items,
+				context = {
+					command = command,
+					bufnr = ctx.bufnr,
+				},
+			})
+
+			vim.lsp.util.show_document({
+				uri = file_uri --[[@as string]],
+				range = {
+					start = position --[[@as lsp.Position]],
+					["end"] = position --[[@as lsp.Position]],
+				},
+			}, client.offset_encoding)
+			---@diagnostic enable: assign-type-mismatch
+
+			vim.cmd("botright copen")
 		end,
 	},
 	on_attach = function(client, bufnr)
@@ -131,5 +130,26 @@ return {
 				},
 			})
 		end, {})
+
+		-- Go to source definition command
+		vim.api.nvim_buf_create_user_command(bufnr, "LspTypescriptGoToSourceDefinition", function()
+			local win = vim.api.nvim_get_current_win()
+			local params = vim.lsp.util.make_position_params(win, client.offset_encoding)
+			client:exec_cmd({
+				command = "_typescript.goToSourceDefinition",
+				title = "Go to source definition",
+				arguments = { params.textDocument.uri, params.position },
+			}, { bufnr = bufnr }, function(err, result)
+				if err then
+					vim.notify("Go to source definition failed: " .. err.message, vim.log.levels.ERROR)
+					return
+				end
+				if not result or vim.tbl_isempty(result) then
+					vim.notify("No source definition found", vim.log.levels.INFO)
+					return
+				end
+				vim.lsp.util.show_document(result[1], client.offset_encoding, { focus = true })
+			end)
+		end, { desc = "Go to source definition" })
 	end,
 }

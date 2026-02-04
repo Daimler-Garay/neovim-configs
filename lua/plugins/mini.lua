@@ -1,6 +1,7 @@
 require("mini.extra").setup({})
 require("mini.surround").setup({})
 require("mini.pick").setup({})
+require("mini.hipatterns").setup({})
 
 -- Better 'a/i'
 local gen_ai_spec = require("mini.extra").gen_ai_spec
