@@ -57,6 +57,7 @@ local plugins = {
 	{ src = "https://github.com/nvim-neotest/nvim-nio" },
 	{ src = "https://github.com/nvim-neotest/neotest" },
 	{ src = "https://github.com/nvim-neotest/neotest-python" },
+	{ src = "https://github.com/nvim-neotest/neotest-jest" },
 }
 
 vim.pack.add(plugins)
