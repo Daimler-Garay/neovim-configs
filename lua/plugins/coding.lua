@@ -13,7 +13,7 @@ require("conform").setup({
 		zsh = { "beautysh" },
 		markdown = { "prettier" },
 		kdl = { "kdlfmt" },
-		css = { "prettier" },
+		ruby = { "rubocop" },
 	},
 	format_on_save = {
 		timeout_ms = 500,
