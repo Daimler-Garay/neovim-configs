@@ -109,6 +109,7 @@ vim.lsp.enable({
 	"html",
 	"cssls",
 	"bashls",
+	"ruby_lsp",
 	"postgres_lsp",
 })
 

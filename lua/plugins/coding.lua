@@ -14,6 +14,7 @@ require("conform").setup({
 		markdown = { "prettier" },
 		kdl = { "kdlfmt" },
 		sql = { "pg_format" },
+		ruby = { "rubocop" },
 	},
 	format_on_save = {
 		timeout_ms = 500,
