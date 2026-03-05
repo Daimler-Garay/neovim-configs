@@ -45,6 +45,10 @@
       "rev": "2305deed25bc61b866d5d39189e9105a45cf1cfb",
       "src": "https://github.com/kdheepak/lazygit.nvim"
     },
+    "leetcode.nvim": {
+      "rev": "fdd3f91800b3983e27bc9fcfb99cfa7293d7f11a",
+      "src": "https://github.com/kawre/leetcode.nvim"
+    },
     "live-preview.nvim": {
       "rev": "f056b4b859d54595afce53e67129f7684380d3ba",
       "src": "https://github.com/brianhuster/live-preview.nvim"
@@ -76,6 +80,10 @@
     "neotest-python": {
       "rev": "b0d3a861bd85689d8ed73f0590c47963a7eb1bf9",
       "src": "https://github.com/nvim-neotest/neotest-python"
+    },
+    "nui.nvim": {
+      "rev": "de740991c12411b663994b2860f1a4fd0937c130",
+      "src": "https://github.com/MunifTanjim/nui.nvim"
     },
     "nvim-autopairs": {
       "rev": "7a2c97c",

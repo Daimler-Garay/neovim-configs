@@ -31,6 +31,7 @@ local plugins = {
 	{ src = "https://github.com/brianhuster/live-preview.nvim" },
 	{ src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
 	{ src = "https://github.com/3rd/image.nvim" },
+	{ src = "https://github.com/MunifTanjim/nui.nvim" },
 
 	-- Language-specific
 	{ src = "https://github.com/mrcjkb/rustaceanvim" },
@@ -58,6 +59,9 @@ local plugins = {
 	{ src = "https://github.com/nvim-neotest/neotest" },
 	{ src = "https://github.com/nvim-neotest/neotest-python" },
 	{ src = "https://github.com/nvim-neotest/neotest-jest" },
+
+	-- Misc
+	{ src = "https://github.com/kawre/leetcode.nvim" },
 }
 
 vim.pack.add(plugins)
@@ -100,11 +104,12 @@ vim.lsp.enable({
 	"ts_ls",
 	"yamlls",
 	"jsonls",
-	"ruff",
+	"ty",
 	"marksman",
 	"html",
 	"cssls",
 	"bashls",
+	"postgres_lsp",
 })
 
 -- Theme -------------------------------------------------------------------------

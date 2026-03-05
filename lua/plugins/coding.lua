@@ -13,10 +13,14 @@ require("conform").setup({
 		zsh = { "beautysh" },
 		markdown = { "prettier" },
 		kdl = { "kdlfmt" },
-		css = { "prettier" },
+		sql = { "pg_format" },
 	},
 	format_on_save = {
 		timeout_ms = 500,
 		lsp_format = "fallback",
 	},
+})
+
+require("leetcode").setup({
+	lang = "rust",
 })
