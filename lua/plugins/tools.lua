@@ -97,3 +97,11 @@ require("gitsigns").setup({
 	end,
 })
 require("outline").setup({})
+require("livepreview.config").set({
+	port = 5501,
+	browser = "default",
+	dynamic_root = false,
+	sync_scroll = true,
+	picker = "",
+	address = "127.0.0.1",
+})
