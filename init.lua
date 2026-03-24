@@ -17,8 +17,6 @@ local plugins = {
 	{ src = "https://github.com/j-hui/fidget.nvim" },
 	{ src = "https://github.com/folke/flash.nvim" },
 	{ src = "https://github.com/stevearc/oil.nvim" },
-	{ src = "https://github.com/chrisgrieser/nvim-lsp-endhints" },
-	{ src = "https://github.com/folke/trouble.nvim" },
 	{ src = "https://github.com/nvim-lualine/lualine.nvim" },
 
 	-- Tooling
@@ -30,14 +28,11 @@ local plugins = {
 	{ src = "https://github.com/hedyhli/outline.nvim" },
 	{ src = "https://github.com/brianhuster/live-preview.nvim" },
 	{ src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
-	{ src = "https://github.com/3rd/image.nvim" },
 	{ src = "https://github.com/MunifTanjim/nui.nvim" },
 
 	-- Language-specific
 	{ src = "https://github.com/mrcjkb/rustaceanvim" },
 	{ src = "https://github.com/saecki/crates.nvim" },
-	{ src = "https://github.com/chomosuke/typst-preview.nvim" },
-	{ src = "https://github.com/rafamadriz/friendly-snippets" },
 
 	-- Completion
 	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("*") },
@@ -58,7 +53,6 @@ local plugins = {
 	{ src = "https://github.com/nvim-neotest/nvim-nio" },
 	{ src = "https://github.com/nvim-neotest/neotest" },
 	{ src = "https://github.com/nvim-neotest/neotest-python" },
-	{ src = "https://github.com/nvim-neotest/neotest-jest" },
 
 	-- Misc
 	{ src = "https://github.com/kawre/leetcode.nvim" },
@@ -99,7 +93,6 @@ require("plugins.completion")
 vim.lsp.enable({
 	"lua_ls",
 	"rust_analyzer",
-	"tinymist",
 	"pyright",
 	"ts_ls",
 	"yamlls",
@@ -109,7 +102,6 @@ vim.lsp.enable({
 	"html",
 	"cssls",
 	"bashls",
-	"ruby_lsp",
 	"postgres_lsp",
 })
 

@@ -96,7 +96,33 @@ require("gitsigns").setup({
 		map({ "o", "x" }, "ih", gitsigns.select_hunk)
 	end,
 })
-require("outline").setup({})
+require("outline").setup({
+	symbol_folding = {
+		markers = { "🞂", "🞃" },
+	},
+	symbols = {
+		icons = {
+			File = { icon = "🗈", hl = "Identifier" }, -- '󰈔'
+			Module = { icon = "▣", hl = "Include" }, -- '󰆧'
+			Namespace = { icon = "{}", hl = "Include" }, -- '󰅪'
+			Package = { icon = "📦", hl = "Include" }, -- '󰏗'
+			Property = { icon = "⛬", hl = "Identifier" }, -- ''
+			Field = { icon = "⬧", hl = "Identifier" }, -- '󰆨'
+			Interface = { icon = "⚙", hl = "Type" }, -- '󰜰'
+			Variable = { icon = "α", hl = "Constant" }, -- ''
+			Constant = { icon = "💎", hl = "Constant" }, -- ''
+			Array = { icon = "[]", hl = "Constant" }, -- '󰅪'
+			Key = { icon = "🗝", hl = "Type" }, -- '🔐'
+			Null = { icon = "∅", hl = "Type" }, -- 'NULL'
+			Component = { icon = "⟨⟩", hl = "Function" }, -- '󰅴'
+			Fragment = { icon = "❲❳", hl = "Constant" }, -- '󰅴'
+			TypeAlias = { icon = "🏷", hl = "Type" }, -- ' '
+			Parameter = { icon = "⟨T⟩", hl = "Identifier" }, -- ' '
+			StaticMethod = { icon = "🧊", hl = "Function" }, -- ' '
+		},
+	},
+})
+
 require("livepreview.config").set({
 	port = 5501,
 	browser = "default",
