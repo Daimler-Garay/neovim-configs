@@ -192,12 +192,15 @@ n("<leader>lg", "<cmd>LazyGit<CR>")
 n("<leader>f", function()
 	require("snacks").picker.files()
 end)
+
 n("<leader>sG", function()
 	require("snacks").picker.lines()
 end)
+
 n("<leader>sg", function()
 	require("snacks").picker.grep()
 end)
+
 n("<leader>sb", function()
 	require("snacks").picker.buffers()
 end)
@@ -205,40 +208,60 @@ end)
 n("gd", function()
 	require("snacks").picker.lsp_definitions()
 end)
+
 n("gD", function()
 	require("snacks").picker.lsp_declarations()
 end)
+
 n("gr", function()
 	require("snacks").picker.lsp_references()
 end)
+
 n("gI", function()
 	require("snacks").picker.lsp_implementations()
 end)
+
 n("gy", function()
 	require("snacks").picker.lsp_type_definitions()
 end)
+
 n("gai", function()
 	require("snacks").picker.lsp_incoming_calls()
 end)
+
 n("gao", function()
 	require("snacks").picker.lsp_outgoing_calls()
 end)
+
 n("<leader>ss", function()
 	require("snacks").picker.lsp_symbols()
 end)
+
 n("<leader>sS", function()
 	require("snacks").picker.lsp_workspace_symbols()
 end)
 
--- -- Tmux Navigation (overrides <C-h/j/k/l>) -------------------------------------
---
--- do
--- 	local tmux = require("nvim-tmux-navigation")
--- 	n("<C-h>", tmux.NvimTmuxNavigateLeft)
--- 	n("<C-j>", tmux.NvimTmuxNavigateDown)
--- 	n("<C-k>", tmux.NvimTmuxNavigateUp)
--- 	n("<C-l>", tmux.NvimTmuxNavigateRight)
--- end
+-- Snacks Toggles
+
+n("<leader>us", function()
+	require("snacks").toggle.option("spell", { name = "Spelling" })
+end)
+
+n("<leader>uw", function()
+	require("snacks").toggle.option("wrap", { name = "Wrap" })
+end)
+
+n("<leader>uL", function()
+	require("snacks").toggle.option("relativenumber", { name = "Relative Number" })
+end)
+
+n("<leader>ul", function()
+	require("snacks").toggle.line_number()
+end)
+
+n("<leader>uh", function()
+	require("snacks").toggle.inlay_hints()
+end)
 
 -- Managed plugins: clean unused ------------------------------------------------
 
