@@ -54,12 +54,6 @@ n("<leader>o", "<cmd>Outline!<CR>")
 
 -- LSP --------------------------------------------------------------------------
 
--- Window navigation (overridden later by tmux-nav if enabled)
-n("<C-h>", "<C-w><C-h>")
-n("<C-j>", "<C-w><C-j>")
-n("<C-k>", "<C-w><C-k>")
-n("<C-l>", "<C-w><C-l>")
-
 -- Save / quit
 n("<leader>w", "<cmd>update<CR>")
 n("<leader>q", "<cmd>quit<CR>")
@@ -79,14 +73,6 @@ v("K", ":m '<-2<CR>gv=gv") -- up
 local crates = require("crates")
 n("<leader>ct", crates.toggle, { silent = true })
 n("<leader>cf", crates.show_features_popup, { silent = true })
-
--- Flash
-nxol("fl", function()
-	require("flash").jump()
-end)
-nxol("Zk", function()
-	require("flash").treesitter()
-end)
 
 -- Snippets (LuaSnip)
 do
@@ -109,25 +95,25 @@ n("\\", "<cmd>Oil<CR>")
 n("<leader>lg", "<cmd>LazyGit<CR>")
 
 -- mini.pick / mini.extra
-n("<leader>f", function()
-	require("mini.pick").builtin.files()
-end)
-n("<leader>sg", function()
-	require("mini.pick").builtin.grep_live()
-end)
-n("<leader>sb", function()
-	require("mini.pick").builtin.buffers()
-end)
+-- n("<leader>f", function()
+-- 	require("mini.pick").builtin.files()
+-- end)
+-- n("<leader>sg", function()
+-- 	require("mini.pick").builtin.grep_live()
+-- end)
+-- n("<leader>sb", function()
+-- 	require("mini.pick").builtin.buffers()
+-- end)
 
 -- Tmux Navigation (overrides <C-h/j/k/l>) -------------------------------------
 
-do
-	local tmux = require("nvim-tmux-navigation")
-	n("<C-h>", tmux.NvimTmuxNavigateLeft)
-	n("<C-j>", tmux.NvimTmuxNavigateDown)
-	n("<C-k>", tmux.NvimTmuxNavigateUp)
-	n("<C-l>", tmux.NvimTmuxNavigateRight)
-end
+-- do
+-- 	local tmux = require("nvim-tmux-navigation")
+-- 	n("<C-h>", tmux.NvimTmuxNavigateLeft)
+-- 	n("<C-j>", tmux.NvimTmuxNavigateDown)
+-- 	n("<C-k>", tmux.NvimTmuxNavigateUp)
+-- 	n("<C-l>", tmux.NvimTmuxNavigateRight)
+-- end
 
 -- Managed plugins: clean unused ------------------------------------------------
 
@@ -182,14 +168,6 @@ local crates = require("crates")
 n("<leader>ct", crates.toggle, { silent = true })
 n("<leader>cf", crates.show_features_popup, { silent = true })
 
--- Flash
-nxol("fl", function()
-	require("flash").jump()
-end)
-nxol("Zk", function()
-	require("flash").treesitter()
-end)
-
 -- Snippets (LuaSnip)
 do
 	local ls = require("luasnip")
@@ -210,26 +188,57 @@ n("\\", "<cmd>Oil<CR>")
 -- Lazygit
 n("<leader>lg", "<cmd>LazyGit<CR>")
 
--- mini.pick / mini.extra
+-- snacks picker
 n("<leader>f", function()
-	require("mini.pick").builtin.files()
+	require("snacks").picker.files()
+end)
+n("<leader>sG", function()
+	require("snacks").picker.lines()
 end)
 n("<leader>sg", function()
-	require("mini.pick").builtin.grep_live()
+	require("snacks").picker.grep()
 end)
 n("<leader>sb", function()
-	require("mini.pick").builtin.buffers()
+	require("snacks").picker.buffers()
 end)
 
--- Tmux Navigation (overrides <C-h/j/k/l>) -------------------------------------
+n("gd", function()
+	require("snacks").picker.lsp_definitions()
+end)
+n("gD", function()
+	require("snacks").picker.lsp_declarations()
+end)
+n("gr", function()
+	require("snacks").picker.lsp_references()
+end)
+n("gI", function()
+	require("snacks").picker.lsp_implementations()
+end)
+n("gy", function()
+	require("snacks").picker.lsp_type_definitions()
+end)
+n("gai", function()
+	require("snacks").picker.lsp_incoming_calls()
+end)
+n("gao", function()
+	require("snacks").picker.lsp_outgoing_calls()
+end)
+n("<leader>ss", function()
+	require("snacks").picker.lsp_symbols()
+end)
+n("<leader>sS", function()
+	require("snacks").picker.lsp_workspace_symbols()
+end)
 
-do
-	local tmux = require("nvim-tmux-navigation")
-	n("<C-h>", tmux.NvimTmuxNavigateLeft)
-	n("<C-j>", tmux.NvimTmuxNavigateDown)
-	n("<C-k>", tmux.NvimTmuxNavigateUp)
-	n("<C-l>", tmux.NvimTmuxNavigateRight)
-end
+-- -- Tmux Navigation (overrides <C-h/j/k/l>) -------------------------------------
+--
+-- do
+-- 	local tmux = require("nvim-tmux-navigation")
+-- 	n("<C-h>", tmux.NvimTmuxNavigateLeft)
+-- 	n("<C-j>", tmux.NvimTmuxNavigateDown)
+-- 	n("<C-k>", tmux.NvimTmuxNavigateUp)
+-- 	n("<C-l>", tmux.NvimTmuxNavigateRight)
+-- end
 
 -- Managed plugins: clean unused ------------------------------------------------
 

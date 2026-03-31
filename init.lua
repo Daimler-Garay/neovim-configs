@@ -4,91 +4,68 @@ require("plugins.rustaceanvim")
 -- Plugins ---------------------------------------------------------------------
 
 local plugins = {
-	-- Core
-	{ src = "https://github.com/nvim-mini/mini.nvim" },
+	{ src = "https://github.com/folke/snacks.nvim" },
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
-
-	-- Syntax / editing
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
 	{ src = "https://github.com/L3MON4D3/LuaSnip" },
 	{ src = "https://github.com/windwp/nvim-autopairs" },
-
-	-- UI/UX
 	{ src = "https://github.com/j-hui/fidget.nvim" },
-	{ src = "https://github.com/folke/flash.nvim" },
 	{ src = "https://github.com/stevearc/oil.nvim" },
-	{ src = "https://github.com/nvim-lualine/lualine.nvim" },
-
-	-- Tooling
 	{ src = "https://github.com/mason-org/mason.nvim" },
 	{ src = "https://github.com/stevearc/conform.nvim" },
-	{ src = "https://github.com/kdheepak/lazygit.nvim" },
-	{ src = "https://github.com/sindrets/diffview.nvim" },
-	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
-	{ src = "https://github.com/hedyhli/outline.nvim" },
-	{ src = "https://github.com/brianhuster/live-preview.nvim" },
 	{ src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
 	{ src = "https://github.com/MunifTanjim/nui.nvim" },
-
-	-- Language-specific
 	{ src = "https://github.com/mrcjkb/rustaceanvim" },
 	{ src = "https://github.com/saecki/crates.nvim" },
-
-	-- Completion
 	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("*") },
-
-	-- Theme
-	{ src = "https://github.com/bluz71/vim-moonfly-colors", name = "moonfly" },
-	{ src = "https://github.com/alexghergh/nvim-tmux-navigation" },
-
+	{ src = "https://github.com/GustavEikaas/easy-dotnet.nvim" },
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
-
-	-- Debugger
-	{ src = "https://github.com/mfussenegger/nvim-dap" },
-	{ src = "https://github.com/rcarriga/nvim-dap-ui" },
-	{ src = "https://github.com/theHamsta/nvim-dap-virtual-text" },
-	{ src = "https://github.com/mfussenegger/nvim-dap-python" },
-
-	-- neotest
-	{ src = "https://github.com/nvim-neotest/nvim-nio" },
-	{ src = "https://github.com/nvim-neotest/neotest" },
-	{ src = "https://github.com/nvim-neotest/neotest-python" },
-
-	-- Misc
-	{ src = "https://github.com/kawre/leetcode.nvim" },
+	{ src = "https://github.com/nvim-lualine/lualine.nvim" },
+	{ src = "https://github.com/bluz71/vim-moonfly-colors", name = "moonfly" },
 }
 
 vim.pack.add(plugins)
-
--- Boot / basics ----------------------------------------------------------------
 
 require("core.options")
 require("core.keymaps")
 require("core.autocmd")
 
--- Tooling ----------------------------------------------------------------------
-require("plugins.tools")
+-- Snacks ------------------------------------------------------------------------
 
-require("plugins.coding")
+require("snacks").setup({
+	bigfile = { enabled = true },
+	bufdelete = { enabled = true },
+	dashboard = { enabled = false },
+	dim = { enabled = true },
+	explorer = { enabled = false },
+	image = { enabled = true },
+	indent = { enabled = true },
+	input = { enabled = false },
+	picker = { enabled = true },
+	notifier = { enabled = false },
+	quickfile = { enabled = true },
+	rename = { enabled = true },
+	scope = { enabled = true },
+	scroll = { enabled = true },
+	statuscolumn = { enabled = true },
+	words = { enabled = true },
+})
 
--- UI / navigation --------------------------------------------------------------
+-- Dotnet ------------------------------------------------------------------------
 
-require("plugins.ui")
+require("easy-dotnet").setup()
 
--- Debugger + Testing -----------------------------------------------------------
+-- Lualine -----------------------------------------------------------------------
 
-require("plugins.debug")
-require("plugins.neotest")
+local job_indicator = { require("easy-dotnet.ui-modules.jobs").lualine }
 
--- mini.nvim --------------------------------------------------------------------
+require("lualine").setup({
+	sections = {
+		lualine_a = { "mode", job_indicator },
+	},
+})
 
-require("plugins.mini")
-
--- Completion -------------------------------------------------------------------
-
-require("plugins.completion")
-
--- LSP ----------------------------------------------------------------------------
+-- LSP ---------------------------------------------------------------------------
 
 vim.lsp.enable({
 	"lua_ls",
@@ -105,6 +82,8 @@ vim.lsp.enable({
 	"postgres_lsp",
 })
 
+require("fidget").setup()
+
 -- Theme -------------------------------------------------------------------------
 
 vim.g.moonflyCursorColor = true
@@ -114,6 +93,83 @@ vim.g.moonflyUnderlineMatchParen = true
 vim.g.moonflyVirtualTextColor = true
 vim.g.moonflyWinSeparator = 2
 vim.cmd.colorscheme("moonfly")
+
 -- Snippets ----------------------------------------------------------------------
 
-require("plugins.snippets")
+local function get_snippet_path()
+	local sysname = vim.loop.os_uname().sysname
+	if sysname == "Windows_NT" then
+		return vim.fn.expand("~/AppData/Local/nvim/snippets/")
+	end
+	return vim.fn.expand("~/.config/nvim/snippets/")
+end
+
+require("luasnip").setup({ enable_autosnippets = true })
+require("luasnip.loaders.from_lua").lazy_load({ paths = get_snippet_path() })
+
+-- Mason
+
+require("mason").setup()
+
+-- Crates
+
+require("crates").setup({
+	lsp = {
+		enabled = true,
+		actions = true,
+		completion = true,
+		hover = true,
+	},
+	completion = {
+		crates = {
+			enabled = true,
+			max_results = 8,
+			min_chars = 3,
+		},
+	},
+})
+
+-- Autopairs ---------------------------------------------------------------------
+
+require("nvim-autopairs").setup()
+
+-- Conform -----------------------------------------------------------------------
+require("conform").setup({
+	formatters_by_ft = {
+		lua = { "stylua" },
+		python = { "ruff_fix", "ruff_format", "ruff_organize_imports" },
+		typescript = { "prettier" },
+		json = { "prettier" },
+		yaml = { "prettier" },
+		html = { "prettier" },
+		css = { "prettier" },
+		javascript = { "prettier" },
+		bash = { "beautysh" },
+		zsh = { "beautysh" },
+		markdown = { "prettier" },
+		kdl = { "kdlfmt" },
+		sql = { "pg_format" },
+	},
+	format_on_save = {
+		timeout_ms = 500,
+		lsp_format = "fallback",
+	},
+})
+-- Oil ---------------------------------------------------------------------------
+
+require("oil").setup({
+	view_options = { show_hidden = true },
+	lsp_file_methods = {
+		enabled = true,
+		timeout_ms = 1000,
+	},
+	columns = { "icon" },
+})
+
+-- Blink -------------------------------------------------------------------------
+require("plugins.completions")
+
+-- Markdown
+require("render-markdown").setup({
+	completions = { blink = { enabled = true } },
+})
