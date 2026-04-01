@@ -1,4 +1,16 @@
 require("blink.cmp").setup({
+	sources = {
+		default = { "lsp", "easy-dotnet", "path", "snippets" },
+		providers = {
+			["easy-dotnet"] = {
+				name = "easy-dotnet",
+				enabled = true,
+				module = "easy-dotnet.completion.blink",
+				score_offset = 10000,
+				async = true,
+			},
+		},
+	},
 	snippets = { preset = "luasnip" },
 	signature = { enabled = true },
 	appearance = {

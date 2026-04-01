@@ -91,29 +91,15 @@ end
 -- Oil
 n("\\", "<cmd>Oil<CR>")
 
--- Lazygit
-n("<leader>lg", "<cmd>LazyGit<CR>")
-
--- mini.pick / mini.extra
--- n("<leader>f", function()
--- 	require("mini.pick").builtin.files()
--- end)
--- n("<leader>sg", function()
--- 	require("mini.pick").builtin.grep_live()
--- end)
--- n("<leader>sb", function()
--- 	require("mini.pick").builtin.buffers()
--- end)
-
 -- Tmux Navigation (overrides <C-h/j/k/l>) -------------------------------------
 
--- do
--- 	local tmux = require("nvim-tmux-navigation")
--- 	n("<C-h>", tmux.NvimTmuxNavigateLeft)
--- 	n("<C-j>", tmux.NvimTmuxNavigateDown)
--- 	n("<C-k>", tmux.NvimTmuxNavigateUp)
--- 	n("<C-l>", tmux.NvimTmuxNavigateRight)
--- end
+do
+	local tmux = require("nvim-tmux-navigation")
+	n("<C-h>", tmux.NvimTmuxNavigateLeft)
+	n("<C-j>", tmux.NvimTmuxNavigateDown)
+	n("<C-k>", tmux.NvimTmuxNavigateUp)
+	n("<C-l>", tmux.NvimTmuxNavigateRight)
+end
 
 -- Managed plugins: clean unused ------------------------------------------------
 

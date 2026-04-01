@@ -22,6 +22,7 @@ local plugins = {
 	{ src = "https://github.com/nvim-lua/plenary.nvim" },
 	{ src = "https://github.com/nvim-lualine/lualine.nvim" },
 	{ src = "https://github.com/bluz71/vim-moonfly-colors", name = "moonfly" },
+	{ src = "https://github.com/alexghergh/nvim-tmux-navigation" },
 }
 
 vim.pack.add(plugins)
