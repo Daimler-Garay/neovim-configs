@@ -171,9 +171,6 @@ end
 -- Oil
 n("\\", "<cmd>Oil<CR>")
 
--- Lazygit
-n("<leader>lg", "<cmd>LazyGit<CR>")
-
 -- snacks picker
 n("<leader>f", function()
 	require("snacks").picker.files()
