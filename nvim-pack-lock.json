@@ -45,6 +45,10 @@
       "rev": "7a2c97c",
       "src": "https://github.com/windwp/nvim-autopairs"
     },
+    "nvim-dap": {
+      "rev": "45a69eba683a2c448dd9ecfc4de89511f0646b5f",
+      "src": "https://github.com/mfussenegger/nvim-dap"
+    },
     "nvim-tmux-navigation": {
       "rev": "4898c98702954439233fdaf764c39636681e2861",
       "src": "https://github.com/alexghergh/nvim-tmux-navigation"
