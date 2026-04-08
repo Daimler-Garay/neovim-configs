@@ -1,6 +1,5 @@
 -- Pre-plugin Configs
 require("plugins.rustaceanvim")
-
 -- Plugins ---------------------------------------------------------------------
 
 local plugins = {
@@ -24,6 +23,7 @@ local plugins = {
 	{ src = "https://github.com/bluz71/vim-moonfly-colors", name = "moonfly" },
 	{ src = "https://github.com/alexghergh/nvim-tmux-navigation" },
 	{ src = "https://github.com/mfussenegger/nvim-dap" },
+	{ src = "https://github.com/igorlfs/nvim-dap-view" },
 }
 
 vim.pack.add(plugins)
@@ -55,7 +55,9 @@ require("snacks").setup({
 
 -- Dotnet ------------------------------------------------------------------------
 
-require("easy-dotnet").setup()
+require("easy-dotnet").setup({
+	picker = "snacks",
+})
 
 -- Lualine -----------------------------------------------------------------------
 
@@ -175,3 +177,7 @@ require("plugins.completions")
 require("render-markdown").setup({
 	completions = { blink = { enabled = true } },
 })
+
+-- Dap
+
+require("plugins.debug")

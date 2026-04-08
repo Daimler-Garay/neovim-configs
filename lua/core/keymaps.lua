@@ -15,37 +15,6 @@ end
 local function t(lhs, rhs, opts)
 	map("t", lhs, rhs, opts)
 end
-local function nxol(lhs, rhs, opts)
-	map({ "n", "x", "o" }, lhs, rhs, opts)
-end
-
--- QOL --------------------------------------------------------------------------
-n("<Esc>", "<cmd>nohlsearch<CR>")
-t("<Esc><Esc>", "<C-\\><C-n>")
-n("<leader>o", "<cmd>Outline!<CR>")
-
--- LSP --------------------------------------------------------------------------
-
--- Leaders ---------------------------------------------------------------------
-
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
--- Keymap helper ----------------------------------------------------------------
-
-local map = vim.keymap.set
-local function n(lhs, rhs, opts)
-	map("n", lhs, rhs, opts)
-end
-local function v(lhs, rhs, opts)
-	map("v", lhs, rhs, opts)
-end
-local function t(lhs, rhs, opts)
-	map("t", lhs, rhs, opts)
-end
-local function nxol(lhs, rhs, opts)
-	map({ "n", "x", "o" }, lhs, rhs, opts)
-end
 
 -- QOL --------------------------------------------------------------------------
 n("<Esc>", "<cmd>nohlsearch<CR>")
@@ -101,33 +70,6 @@ do
 	n("<C-l>", tmux.NvimTmuxNavigateRight)
 end
 
--- Managed plugins: clean unused ------------------------------------------------
-
-local function pack_clean()
-	local unused = {}
-
-	for _, plugin in ipairs(vim.pack.get()) do
-		local is_managed = plugin.spec and type(plugin.spec.src) == "string" and plugin.spec.src ~= ""
-		if is_managed and not plugin.active then
-			table.insert(unused, plugin.spec.name)
-		end
-	end
-
-	if #unused == 0 then
-		print("No unused managed plugins.")
-		return
-	end
-
-	print("Unused managed plugins:")
-	for _, name in ipairs(unused) do
-		print("  - " .. name)
-	end
-
-	if vim.fn.confirm("Remove these plugins from disk?", "&Yes\n&No", 2) == 1 then
-		vim.pack.del(unused)
-	end
-end
-
 -- Window navigation (overridden later by tmux-nav if enabled)
 n("<C-h>", "<C-w><C-h>")
 n("<C-j>", "<C-w><C-j>")
@@ -149,11 +91,6 @@ v("K", ":m '<-2<CR>gv=gv") -- up
 
 -- Plugin mappings --------------------------------------------------------------
 
--- Crates
-local crates = require("crates")
-n("<leader>ct", crates.toggle, { silent = true })
-n("<leader>cf", crates.show_features_popup, { silent = true })
-
 -- Snippets (LuaSnip)
 do
 	local ls = require("luasnip")
@@ -170,6 +107,9 @@ end
 
 -- Oil
 n("\\", "<cmd>Oil<CR>")
+
+-- Lazygit
+n("<leader>lg", "<cmd>LazyGit<CR>")
 
 -- snacks picker
 n("<leader>f", function()
