@@ -24,6 +24,7 @@ local plugins = {
 	{ src = "https://github.com/alexghergh/nvim-tmux-navigation" },
 	{ src = "https://github.com/mfussenegger/nvim-dap" },
 	{ src = "https://github.com/igorlfs/nvim-dap-view" },
+	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
 }
 
 vim.pack.add(plugins)
