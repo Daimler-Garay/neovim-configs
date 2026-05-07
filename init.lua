@@ -75,7 +75,6 @@ require("lualine").setup({
 vim.lsp.enable({
 	"lua_ls",
 	"rust_analyzer",
-	"pyright",
 	"ts_ls",
 	"yamlls",
 	"jsonls",
