@@ -9,15 +9,6 @@ vim.api.nvim_create_autocmd("User", {
 	end,
 })
 
--- Treesitter
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "rust", "python", "lua", "typescript" },
-	callback = function()
-		vim.treesitter.start()
-		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-	end,
-})
-
 -- Restore cursor to previous position
 vim.api.nvim_create_autocmd("BufReadPost", {
 	callback = function(args)
