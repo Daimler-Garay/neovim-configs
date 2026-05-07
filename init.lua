@@ -113,7 +113,12 @@ require("luasnip.loaders.from_lua").lazy_load({ paths = get_snippet_path() })
 
 -- Mason
 
-require("mason").setup()
+require("mason").setup({
+	registries = {
+		"github:mason-org/mason-registry",
+		"github:Crashdummyy/mason-registry",
+	},
+})
 
 -- Crates
 
@@ -175,6 +180,7 @@ require("plugins.completions")
 
 -- Markdown
 require("render-markdown").setup({
+	enabled = false,
 	completions = { blink = { enabled = true } },
 })
 
